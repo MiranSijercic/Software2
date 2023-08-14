@@ -25,4 +25,5 @@ public class Main extends Application {
 }
 
 // NullPointer trying to find dashboard.fxml
+// CRUD parameter index corresponds to ? or db columns?
 

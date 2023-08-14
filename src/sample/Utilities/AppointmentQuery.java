@@ -14,19 +14,19 @@ public abstract class AppointmentQuery {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, " +
                 "Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(2, title);
-        ps.setString(3, description);
-        ps.setString(4, location);
-        ps.setString(5, type);
-        ps.setTimestamp(6, start);
-        ps.setTimestamp(7, end);
-        ps.setTimestamp(8, createDate);
-        ps.setString(9, createdBy);
-        ps.setTimestamp(10, lastUpdate);
-        ps.setString(11, lastUpdatedBy);
-        ps.setInt(12, customerID);
-        ps.setInt(13, userID);
-        ps.setInt(14, contactID);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, start);
+        ps.setTimestamp(6, end);
+        ps.setTimestamp(7, createDate);
+        ps.setString(8, createdBy);
+        ps.setTimestamp(9, lastUpdate);
+        ps.setString(10, lastUpdatedBy);
+        ps.setInt(11, customerID);
+        ps.setInt(12, userID);
+        ps.setInt(13, contactID);
 
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
@@ -39,20 +39,20 @@ public abstract class AppointmentQuery {
                 "Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, " +
                 "User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-        ps.setString(2, title);
-        ps.setString(3, description);
-        ps.setString(4, location);
-        ps.setString(5, type);
-        ps.setTimestamp(6, start);
-        ps.setTimestamp(7, end);
-        ps.setTimestamp(8, createDate);
-        ps.setString(9, createdBy);
-        ps.setTimestamp(10, lastUpdate);
-        ps.setString(11, lastUpdatedBy);
-        ps.setInt(12, customerID);
-        ps.setInt(13, userID);
-        ps.setInt(14, contactID);
-        ps.setInt(15, appointmentID);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, start);
+        ps.setTimestamp(6, end);
+        ps.setTimestamp(7, createDate);
+        ps.setString(8, createdBy);
+        ps.setTimestamp(9, lastUpdate);
+        ps.setString(10, lastUpdatedBy);
+        ps.setInt(11, customerID);
+        ps.setInt(12, userID);
+        ps.setInt(13, contactID);
+        ps.setInt(14, appointmentID);
 
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;

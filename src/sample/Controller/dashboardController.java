@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Model.Appointment;
 import sample.Model.Customer;
 import sample.Utilities.AppointmentQuery;
+import sample.Utilities.CustomerQuery;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -58,6 +59,18 @@ public class dashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
+            customerTable.setItems(CustomerQuery.getAllCustomers());
+            customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+            postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+            phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+            customerCreateDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+            customerCreatedByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+            customerLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+            customerLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+            divisionIDCol.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+
             appointmentTable.setItems(AppointmentQuery.getAllAppointments());
             appointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
             titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
