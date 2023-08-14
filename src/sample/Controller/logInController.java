@@ -2,11 +2,18 @@ package sample.Controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import sample.Utilities.UserQuery;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -14,7 +21,7 @@ public class logInController implements Initializable {
     public Label regionLabel;
 
     public TextField userNameField;
-    public TextField passwordField;
+    public PasswordField passwordField;
 
     public Button loginButton;
     public Button exitButton;
@@ -24,13 +31,25 @@ public class logInController implements Initializable {
 
     }
 
-    public void onLogin(ActionEvent actionEvent) {
+    public void onLogin(ActionEvent actionEvent) throws IOException {
         try {
             String userName = userNameField.getText();
             String password = passwordField.getText();
 
             if (UserQuery.foundUser(userName, password)) {
-                //todo add route to dashboard
+                Parent root = FXMLLoader.load(getClass().getResource("view/dashboard.fxml"));
+                Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 700, 500);
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                stage.show();
+            }
+
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("User was not found");
+                alert.showAndWait();
             }
 
         }
@@ -41,7 +60,6 @@ public class logInController implements Initializable {
             alert.showAndWait();
 
         }
-
     }
 
     public void onExit(ActionEvent actionEvent) {

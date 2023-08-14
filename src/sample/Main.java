@@ -23,3 +23,6 @@ public class Main extends Application {
         launch(args);
     }
 }
+
+// NullPointer trying to find dashboard.fxml
+
