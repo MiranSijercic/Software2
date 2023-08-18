@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Model.Appointment;
 import sample.Model.Customer;
@@ -53,6 +54,8 @@ public class dashboardController implements Initializable {
     public Button appointmentUpdate;
     public Button appointmentDelete;
     public Button exit;
+    public TextField customerSearch;
+    public TextField appointmentSearch;
 
 
     @Override
@@ -109,6 +112,12 @@ public class dashboardController implements Initializable {
     }
 
     public void onAppointmentDelete(ActionEvent actionEvent) {
+    }
+
+    public void onCustomerSearch(ActionEvent actionEvent) {
+    }
+
+    public void onAppointmentSearch(ActionEvent actionEvent) {
     }
 
     public void onExit(ActionEvent actionEvent) {

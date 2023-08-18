@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="466.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.updateCustomerController">
+   <children>
+      <VBox layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="100.0" spacing="34.0">
+         <children>
+            <Label text="CUSTOMER ID" />
+            <Label layoutX="10.0" layoutY="10.0" text="NAME" />
+            <Label layoutX="10.0" layoutY="27.0" text="ADDRESS" />
+            <Label layoutX="10.0" layoutY="44.0" text="POSTAL CODE" />
+            <Label layoutX="10.0" layoutY="61.0" text="STATE/TERRITORY" />
+            <Label layoutX="10.0" layoutY="78.0" text="COUNTRY" />
+            <Label layoutX="10.0" layoutY="95.0" text="PHONE" />
+         </children>
+      </VBox>
+      <VBox layoutX="142.0" layoutY="14.0" prefHeight="325.0" prefWidth="239.0" spacing="25.0">
+         <children>
+            <TextField fx:id="customerIDField" disable="true" editable="false" />
+            <TextField fx:id="nameField" layoutX="10.0" layoutY="10.0" />
+            <TextField fx:id="addressField" layoutX="10.0" layoutY="10.0" />
+            <TextField fx:id="postalCodeField" layoutX="10.0" layoutY="35.0" />
+            <ComboBox fx:id="stateCombo" prefWidth="150.0" />
+            <ComboBox fx:id="countryCombo" layoutX="10.0" layoutY="110.0" prefWidth="150.0" />
+            <TextField fx:id="phoneField" layoutX="10.0" layoutY="60.0" />
+         </children>
+      </VBox>
+      <Button fx:id="save" layoutX="180.0" layoutY="383.0" mnemonicParsing="false" onAction="#onSave" text="SAVE" />
+      <Button fx:id="exit" layoutX="251.0" layoutY="383.0" mnemonicParsing="false" onAction="#onExit" text="EXIT" />
+   </children>
+</AnchorPane>

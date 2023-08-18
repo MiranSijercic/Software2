@@ -37,7 +37,7 @@ public class logInController implements Initializable {
             String password = passwordField.getText();
 
             if (UserQuery.foundUser(userName, password)) {
-                Parent root = FXMLLoader.load(getClass().getResource("view/dashboard.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
                 Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root, 700, 500);
                 stage.setTitle("Dashboard");
