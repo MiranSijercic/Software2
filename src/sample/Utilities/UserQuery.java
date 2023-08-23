@@ -1,7 +1,6 @@
 package sample.Utilities;
 
 import sample.Model.User;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public abstract class UserQuery {
 
-    public static List<User> select() throws SQLException {
+    public static List<User> getAllUsers() throws SQLException {
         String sql = "SELECT * FROM users";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();

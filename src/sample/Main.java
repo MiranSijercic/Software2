@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.Utilities.JDBC;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class Main extends Application {
 
     @Override
@@ -19,11 +22,15 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        ResourceBundle rb = ResourceBundle.getBundle("sample/language", Locale.FRANCE);
+        System.out.println(rb.getString("hello"));
         JDBC.makeConnection();
         launch(args);
     }
 }
 
-// NullPointer trying to find dashboard.fxml
-// CRUD parameter index corresponds to ? or db columns?
+// NullPointer trying to find dashboard.fxml. Why not with loginform?
+// how property files need to work
+// most efficient way to verify user. Tracking full user object vs just userID
 
+// add dropdown for user in appointment add

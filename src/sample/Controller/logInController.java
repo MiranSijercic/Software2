@@ -8,8 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Model.User;
 import sample.Utilities.UserQuery;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class logInController implements Initializable {
+
     public Label regionLabel;
 
     public TextField userNameField;
@@ -36,22 +37,22 @@ public class logInController implements Initializable {
             String userName = userNameField.getText();
             String password = passwordField.getText();
 
-            if (UserQuery.foundUser(userName, password)) {
-                Parent root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
-                Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 700, 500);
-                stage.setTitle("Dashboard");
-                stage.setScene(scene);
-                stage.show();
+            for (User user: UserQuery.getAllUsers()) {
+                if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                    dashboardController.currentUserID = user.getUserID();
+                    Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
+                    Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root, 700, 500);
+                    stage.setTitle("Dashboard");
+                    stage.setScene(scene);
+                    stage.show();
+                }
             }
 
-            else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("User was not found");
-                alert.showAndWait();
-            }
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Username or Password is not valid");
+            alert.showAndWait();
         }
         catch (NumberFormatException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Model.Appointment;
 import sample.Model.Customer;
+import sample.Model.User;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.CustomerQuery;
 
@@ -18,6 +19,8 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
+
+    public static int currentUserID;
 
     public TableView<Customer> customerTable;
     public TableColumn<Customer, Integer> customerIDCol;
