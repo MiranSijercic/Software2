@@ -1,21 +1,25 @@
 package sample.Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Customer;
 import sample.Model.User;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.CustomerQuery;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
@@ -99,7 +103,13 @@ public class dashboardController implements Initializable {
         
     }
 
-    public void onCustomerAdd(ActionEvent actionEvent) {
+    public void onCustomerAdd(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/addCustomerForm.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 415, 450);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onCustomerUpdate(ActionEvent actionEvent) {
@@ -123,6 +133,23 @@ public class dashboardController implements Initializable {
     public void onAppointmentSearch(ActionEvent actionEvent) {
     }
 
-    public void onExit(ActionEvent actionEvent) {
+    public void onExit(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Exit Dashboard");
+        alert.setContentText("Are you sure you want to log out?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Parent root = FXMLLoader.load(getClass().getResource("../View/loginForm.fxml"));
+            Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 450, 500);
+            stage.setTitle("C195");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            alert.close();
+        }
+
     }
 }

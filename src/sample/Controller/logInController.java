@@ -13,6 +13,7 @@ import sample.Utilities.UserQuery;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -30,6 +31,8 @@ public class logInController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        regionLabel.setText(Locale.getDefault().toString());
+
     }
 
     public void onLogin(ActionEvent actionEvent) throws IOException {
@@ -42,17 +45,19 @@ public class logInController implements Initializable {
                     dashboardController.currentUserID = user.getUserID();
                     Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
                     Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-                    Scene scene = new Scene(root, 700, 500);
+                    Scene scene = new Scene(root, 615, 700);
                     stage.setTitle("Dashboard");
                     stage.setScene(scene);
                     stage.show();
+                    break;
                 }
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Username or Password is not valid");
+                alert.showAndWait();
             }
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Username or Password is not valid");
-            alert.showAndWait();
         }
         catch (NumberFormatException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

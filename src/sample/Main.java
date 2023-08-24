@@ -22,15 +22,14 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        ResourceBundle rb = ResourceBundle.getBundle("sample/language", Locale.FRANCE);
-        System.out.println(rb.getString("hello"));
+        // ResourceBundle rb = ResourceBundle.getBundle("sample/language", Locale.FRANCE);
+        // System.out.println(rb.getString("hello"));
+        // Locale.setDefault(Locale.FRANCE);
         JDBC.makeConnection();
         launch(args);
     }
 }
 
-// NullPointer trying to find dashboard.fxml. Why not with loginform?
-// how property files need to work
-// most efficient way to verify user. Tracking full user object vs just userID
-
 // add dropdown for user in appointment add
+
+// todo: set up combo boxes to filter with selection
