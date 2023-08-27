@@ -22,14 +22,13 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        // ResourceBundle rb = ResourceBundle.getBundle("sample/language", Locale.FRANCE);
-        // System.out.println(rb.getString("hello"));
         // Locale.setDefault(Locale.FRANCE);
         JDBC.makeConnection();
         launch(args);
     }
 }
 
-// add dropdown for user in appointment add
+// switch statement for ComboBox filtering?
+// how to return User object with select using userID
 
-// todo: set up combo boxes to filter with selection
+// add dropdown for user in appointment add

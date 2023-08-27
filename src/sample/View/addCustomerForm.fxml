@@ -15,8 +15,8 @@
             <Label text="NAME" />
             <Label layoutX="10.0" layoutY="10.0" text="ADDRESS" />
             <Label layoutX="10.0" layoutY="27.0" text="POSTAL CODE" />
-            <Label layoutX="10.0" layoutY="44.0" text="STATE/TERRITORY" />
-            <Label layoutX="10.0" layoutY="166.0" text="COUNTRY" />
+            <Label layoutX="10.0" layoutY="44.0" text="COUNTRY" />
+            <Label layoutX="10.0" layoutY="166.0" text="STATE/TERRITORY" />
             <Label layoutX="10.0" layoutY="218.0" text="PHONE" />
          </children>
       </VBox>
@@ -25,8 +25,8 @@
             <TextField fx:id="nameField" />
             <TextField fx:id="addressField" layoutX="10.0" layoutY="10.0" />
             <TextField fx:id="postalCodeField" layoutX="10.0" layoutY="35.0" />
-            <ComboBox fx:id="stateCombo" prefWidth="150.0" />
-            <ComboBox fx:id="countryCombo" layoutX="10.0" layoutY="210.0" prefWidth="150.0" />
+            <ComboBox fx:id="countryCombo" onAction="#onCountrySelect" prefWidth="150.0" />
+            <ComboBox fx:id="stateCombo" layoutX="10.0" layoutY="210.0" onAction="#onStateSelect" prefWidth="150.0" />
             <TextField fx:id="phoneField" />
          </children>
       </VBox>

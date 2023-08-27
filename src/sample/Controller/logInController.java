@@ -21,6 +21,9 @@ import java.util.ResourceBundle;
 public class logInController implements Initializable {
 
     public Label regionLabel;
+    public Label welcomeLabel;
+    public Label usernameLabel;
+    public Label passwordLabel;
 
     public TextField userNameField;
     public PasswordField passwordField;
@@ -33,6 +36,17 @@ public class logInController implements Initializable {
 
         regionLabel.setText(Locale.getDefault().toString());
 
+        if (Locale.getDefault().getLanguage().equals("fr")) {
+            ResourceBundle rb = ResourceBundle.getBundle("sample/language", Locale.FRANCE);
+            welcomeLabel.setText(rb.getString("welcome"));
+            usernameLabel.setText(rb.getString("usernameLabel"));
+            passwordLabel.setText(rb.getString("passwordLabel"));
+            userNameField.setPromptText(rb.getString("usernamePrompt"));
+            passwordField.setPromptText(rb.getString("passwordPrompt"));
+            loginButton.setText(rb.getString("login"));
+            exitButton.setText(rb.getString("exit"));
+        }
+
     }
 
     public void onLogin(ActionEvent actionEvent) throws IOException {
@@ -42,7 +56,7 @@ public class logInController implements Initializable {
 
             for (User user: UserQuery.getAllUsers()) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                    dashboardController.currentUserID = user.getUserID();
+                    dashboardController.currentUserName = user.getUserName();
                     Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
                     Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 615, 700);
@@ -56,6 +70,7 @@ public class logInController implements Initializable {
                 alert.setTitle("Error");
                 alert.setContentText("Username or Password is not valid");
                 alert.showAndWait();
+                break;
             }
 
         }

@@ -14,6 +14,7 @@ import sample.Model.Customer;
 import sample.Model.User;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.CustomerQuery;
+import sample.Utilities.UserQuery;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
 
-    public static int currentUserID;
+    public static String currentUserName;
 
     public TableView<Customer> customerTable;
     public TableColumn<Customer, Integer> customerIDCol;
@@ -97,8 +98,9 @@ public class dashboardController implements Initializable {
             appointmentUserIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
             appointmentContactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
             
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
         }
         
     }
@@ -116,6 +118,25 @@ public class dashboardController implements Initializable {
     }
 
     public void onCustomerDelete(ActionEvent actionEvent) {
+        try {
+            Customer customer = customerTable.getSelectionModel().getSelectedItem();
+            for (Appointment appointment: appointmentTable.getItems()) {
+                if (appointment.getCustomerID() == customer.getCustomerID()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Customer has associated Appointments, please delete these Appointments first");
+                    alert.showAndWait();
+                    break;
+                }
+            }
+
+            CustomerQuery.delete(customer.getCustomerID());
+            customerTable.setItems(CustomerQuery.getAllCustomers());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void onAppointmentAdd(ActionEvent actionEvent) {

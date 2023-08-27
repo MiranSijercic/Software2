@@ -14,14 +14,14 @@
       <Label fx:id="regionLabel" layoutX="358.0" layoutY="14.0" text="Label" />
       <VBox layoutX="100.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" spacing="15.0">
          <children>
-            <Label text="Welcome!">
+            <Label fx:id="welcomeLabel" text="Welcome!">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="10.0" text="USERNAME" />
+            <Label fx:id="usernameLabel" layoutX="10.0" layoutY="10.0" text="USERNAME" />
             <TextField fx:id="userNameField" promptText="TYPE YOUR USERNAME" />
-            <Label layoutX="10.0" layoutY="27.0" text="PASSWORD" />
+            <Label fx:id="passwordLabel" layoutX="10.0" layoutY="27.0" text="PASSWORD" />
             <PasswordField fx:id="passwordField" promptText="TYPE YOUR PASSWORD" />
          </children>
       </VBox>
