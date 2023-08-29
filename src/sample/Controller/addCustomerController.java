@@ -52,8 +52,6 @@ public class addCustomerController implements Initializable {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void onStateSelect(ActionEvent actionEvent) {
@@ -62,26 +60,30 @@ public class addCustomerController implements Initializable {
     public void onCountrySelect(ActionEvent actionEvent) throws SQLException {
         Country selectedCountry = countryCombo.getSelectionModel().getSelectedItem();
         ObservableList<FLD> filteredFLD = FXCollections.observableArrayList();
-        if (selectedCountry.getCountryID() == 1) {
-            for (FLD fld: FLDQuery.getAllFLD()) {
-                if (fld.getCountryID() == 1) {
-                    filteredFLD.add(fld);
+        int countryID = selectedCountry.getCountryID();
+        switch (countryID) {
+            case 1:
+                for (FLD fld: FLDQuery.getAllFLD()) {
+                    if (fld.getCountryID() == 1) {
+                        filteredFLD.add(fld);
+                    }
+
                 }
-            }
-        }
-        if (selectedCountry.getCountryID() == 2) {
-            for (FLD fld: FLDQuery.getAllFLD()) {
-                if (fld.getCountryID() == 2) {
-                    filteredFLD.add(fld);
+                break;
+            case 2:
+                for (FLD fld: FLDQuery.getAllFLD()) {
+                    if (fld.getCountryID() == 2) {
+                        filteredFLD.add(fld);
+                    }
                 }
-            }
-        }
-        if (selectedCountry.getCountryID() == 3) {
-            for (FLD fld: FLDQuery.getAllFLD()) {
-                if (fld.getCountryID() == 3) {
-                    filteredFLD.add(fld);
+                break;
+            case 3:
+                for (FLD fld: FLDQuery.getAllFLD()) {
+                    if (fld.getCountryID() == 3) {
+                        filteredFLD.add(fld);
+                    }
                 }
-            }
+                break;
         }
         stateCombo.setItems(filteredFLD);
     }

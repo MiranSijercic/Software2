@@ -28,7 +28,11 @@ public class Main extends Application {
     }
 }
 
-// switch statement for ComboBox filtering?
+// todo: write getAllContacts()
+// todo: write addAppointment
+// todo: write updateAppointment
+
+// more efficient way to set combo boxes in updateCustomer?
 // how to return User object with select using userID
 
 // add dropdown for user in appointment add

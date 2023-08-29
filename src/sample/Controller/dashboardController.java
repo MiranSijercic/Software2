@@ -115,6 +115,26 @@ public class dashboardController implements Initializable {
     }
 
     public void onCustomerUpdate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/updateCustomerForm.fxml"));
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+
+            updateCustomerController updateCustomerController = loader.getController();
+            updateCustomerController.sendCustomer(customerTable.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("Update Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (NullPointerException | IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please select a Customer from the list");
+            alert.showAndWait();
+        }
     }
 
     public void onCustomerDelete(ActionEvent actionEvent) {

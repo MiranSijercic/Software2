@@ -94,7 +94,6 @@ public abstract class AppointmentQuery {
         }
 
         return allAppointments;
-
     }
 
 }
