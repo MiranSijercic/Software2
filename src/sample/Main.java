@@ -28,11 +28,4 @@ public class Main extends Application {
     }
 }
 
-// todo: write getAllContacts()
-// todo: write addAppointment
-// todo: write updateAppointment
-
-// more efficient way to set combo boxes in updateCustomer?
-// how to return User object with select using userID
-
-// add dropdown for user in appointment add
+// todo: write check to compare start vs end time in addAppointment

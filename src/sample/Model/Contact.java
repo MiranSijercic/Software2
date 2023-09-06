@@ -2,12 +2,12 @@ package sample.Model;
 
 public class Contact {
     private int contactID;
-    private String ContactName;
+    private String contactName;
     private String email;
 
     public Contact(int contactID, String contactName, String email) {
         this.contactID = contactID;
-        ContactName = contactName;
+        this.contactName = contactName;
         this.email = email;
     }
 
@@ -20,11 +20,11 @@ public class Contact {
     }
 
     public String getContactName() {
-        return ContactName;
+        return contactName;
     }
 
     public void setContactName(String contactName) {
-        ContactName = contactName;
+        this.contactName = contactName;
     }
 
     public String getEmail() {
@@ -34,4 +34,8 @@ public class Contact {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() { return ("" + contactName);}
+
 }

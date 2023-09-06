@@ -13,14 +13,14 @@ import sample.Utilities.UserQuery;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 public class logInController implements Initializable {
 
-    public Label regionLabel;
+    public Label zoneLabel;
+    public Label languageLabel;
     public Label welcomeLabel;
     public Label usernameLabel;
     public Label passwordLabel;
@@ -31,10 +31,14 @@ public class logInController implements Initializable {
     public Button loginButton;
     public Button exitButton;
 
+    public String errorMessage;
+    public String error;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        regionLabel.setText(Locale.getDefault().toString());
+        languageLabel.setText(String.valueOf(Locale.getDefault()));
+        zoneLabel.setText(String.valueOf(ZoneId.systemDefault()));
 
         if (Locale.getDefault().getLanguage().equals("fr")) {
             ResourceBundle rb = ResourceBundle.getBundle("sample/language", Locale.FRANCE);
@@ -45,6 +49,7 @@ public class logInController implements Initializable {
             passwordField.setPromptText(rb.getString("passwordPrompt"));
             loginButton.setText(rb.getString("login"));
             exitButton.setText(rb.getString("exit"));
+            errorMessage = rb.getString("errorMessage");
         }
 
     }
@@ -57,6 +62,7 @@ public class logInController implements Initializable {
             for (User user: UserQuery.getAllUsers()) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                     dashboardController.currentUserName = user.getUserName();
+                    dashboardController.currentUserID = user.getUserID();
                     Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
                     Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 615, 700);
@@ -67,8 +73,8 @@ public class logInController implements Initializable {
                 }
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Username or Password is not valid");
+                alert.setTitle(error);
+                alert.setContentText(errorMessage);
                 alert.showAndWait();
                 break;
             }

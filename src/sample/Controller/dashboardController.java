@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 public class dashboardController implements Initializable {
 
     public static String currentUserName;
+    public static int currentUserID;
 
     public TableView<Customer> customerTable;
     public TableColumn<Customer, Integer> customerIDCol;
@@ -109,7 +110,7 @@ public class dashboardController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("../View/addCustomerForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 415, 450);
-        stage.setTitle("Dashboard");
+        stage.setTitle("Add a Customer");
         stage.setScene(scene);
         stage.show();
     }
@@ -125,7 +126,7 @@ public class dashboardController implements Initializable {
             updateCustomerController.sendCustomer(customerTable.getSelectionModel().getSelectedItem());
 
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-            stage.setTitle("Update Customer");
+            stage.setTitle("Update a Customer");
             stage.setScene(scene);
             stage.show();
         }
@@ -159,7 +160,13 @@ public class dashboardController implements Initializable {
 
     }
 
-    public void onAppointmentAdd(ActionEvent actionEvent) {
+    public void onAppointmentAdd(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/addAppointmentForm.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 650, 400);
+        stage.setTitle("Add an Appointment");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onAppointmentUpdate(ActionEvent actionEvent) {
