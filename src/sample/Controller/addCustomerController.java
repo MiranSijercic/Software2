@@ -90,33 +90,40 @@ public class addCustomerController implements Initializable {
 
     public void onSave(ActionEvent actionEvent) {
         try {
-            String name = nameField.getText();
-            String address = addressField.getText();
-            String postalCode = postalCodeField.getText();
-            String phone = phoneField.getText();
-            Timestamp createDate = new Timestamp(System.currentTimeMillis());
-            String createdBy = dashboardController.currentUserName;
-            Timestamp lastUpdate = new Timestamp(System.currentTimeMillis());
-            String lastUpdatedBy = dashboardController.currentUserName;
-            int divisionID = stateCombo.getSelectionModel().getSelectedItem().getDivisionID();
+            if (!(nameField.getText().isEmpty() || addressField.getText().isEmpty() || postalCodeField.getText().isEmpty()
+            || postalCodeField.getText().isEmpty() || phoneField.getText().isEmpty()
+                    || countryCombo.getSelectionModel().isEmpty() || stateCombo.getSelectionModel().isEmpty())) {
+                String name = nameField.getText();
+                String address = addressField.getText();
+                String postalCode = postalCodeField.getText();
+                String phone = phoneField.getText();
+                Timestamp createDate = new Timestamp(System.currentTimeMillis());
+                String createdBy = dashboardController.currentUserName;
+                Timestamp lastUpdate = new Timestamp(System.currentTimeMillis());
+                String lastUpdatedBy = dashboardController.currentUserName;
+                int divisionID = stateCombo.getSelectionModel().getSelectedItem().getDivisionID();
 
-            CustomerQuery.insert(name, address, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdatedBy,
-                    divisionID);
+                CustomerQuery.insert(name, address, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdatedBy,
+                        divisionID);
 
-            Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
-            Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 615, 700);
-            stage.setTitle("Dashboard");
-            stage.setScene(scene);
-            stage.show();
+                Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
+                Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 615, 700);
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                stage.show();
+            }
 
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("All fields are required.");
+                alert.showAndWait();
+            }
         }
-        catch (NullPointerException | SQLException | IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("All fields are required.");
-            alert.showAndWait();
 
+        catch (NullPointerException | SQLException | IOException e) {
+            e.printStackTrace();
         }
     }
 

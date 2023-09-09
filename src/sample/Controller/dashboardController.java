@@ -173,6 +173,24 @@ public class dashboardController implements Initializable {
     }
 
     public void onAppointmentDelete(ActionEvent actionEvent) {
+        try {
+            Appointment appointment = appointmentTable.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete");
+            alert.setHeaderText("Delete Appointment?");
+            alert.setContentText("Are you sure you want to delete this appointment?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                AppointmentQuery.delete(appointment.getAppointmentID());
+                appointmentTable.setItems(AppointmentQuery.getAllAppointments());
+            }
+            else {
+                alert.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onCustomerSearch(ActionEvent actionEvent) {

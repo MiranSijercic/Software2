@@ -62,50 +62,56 @@ public class addAppointmentController implements Initializable {
 
     }
 
-    public void onCustomerCombo(ActionEvent actionEvent) {
-    }
-
-    public void onContactCombo(ActionEvent actionEvent) {
-    }
-
-    public void onStartCombo(ActionEvent actionEvent) {
-    }
-
-    public void onEndCombo(ActionEvent actionEvent) {
-    }
-
-    public void onDatePicker(ActionEvent actionEvent) {
-    }
-
     public void onSave(ActionEvent actionEvent) throws SQLException {
         try {
-            String title = titleField.getText();
-            String description = descriptionField.getText();
-            String location = locationField.getText();
-            String type = typeField.getText();
-            LocalDateTime startDateTime = LocalDateTime.of(datePicker.getValue(), startCombo.getValue());
-            Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
-            LocalDateTime endDateTime = LocalDateTime.of(datePicker.getValue(), endCombo.getValue());
-            Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
-            Timestamp createDate = new Timestamp(System.currentTimeMillis());
-            String createdBy = dashboardController.currentUserName;
-            Timestamp lastUpdate = new Timestamp(System.currentTimeMillis());
-            String lastUpdatedBy = dashboardController.currentUserName;
-            int customerID = customerCombo.getSelectionModel().getSelectedItem().getCustomerID();
-            int userID = dashboardController.currentUserID;
-            int contactID = contactCombo.getSelectionModel().getSelectedItem().getContactID();
+            if (!(customerCombo.getSelectionModel().isEmpty() || titleField.getText().isEmpty() || descriptionField.getText().isEmpty()
+                    || locationField.getText().isEmpty() || typeField.getText().isEmpty() || contactCombo.getSelectionModel().isEmpty()
+                    || datePicker.getValue() == null || startCombo.getSelectionModel().isEmpty() || endCombo.getSelectionModel().isEmpty())) {
+                String title = titleField.getText();
+                String description = descriptionField.getText();
+                String location = locationField.getText();
+                String type = typeField.getText();
+                LocalDateTime startDateTime = LocalDateTime.of(datePicker.getValue(), startCombo.getValue());
+                Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
+                LocalDateTime endDateTime = LocalDateTime.of(datePicker.getValue(), endCombo.getValue());
+                Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
+                Timestamp createDate = new Timestamp(System.currentTimeMillis());
+                String createdBy = dashboardController.currentUserName;
+                Timestamp lastUpdate = new Timestamp(System.currentTimeMillis());
+                String lastUpdatedBy = dashboardController.currentUserName;
+                int customerID = customerCombo.getSelectionModel().getSelectedItem().getCustomerID();
+                int userID = dashboardController.currentUserID;
+                int contactID = contactCombo.getSelectionModel().getSelectedItem().getContactID();
 
-            AppointmentQuery.insert(title, description, location, type, startTimestamp, endTimestamp, createDate, createdBy,
-                    lastUpdate, lastUpdatedBy, customerID, userID, contactID);
+                if (startTimestamp.before(endTimestamp)) {
+                    AppointmentQuery.insert(title, description, location, type, startTimestamp, endTimestamp, createDate, createdBy,
+                            lastUpdate, lastUpdatedBy, customerID, userID, contactID);
+                    Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
+                    Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root, 615, 700);
+                    stage.setTitle("Dashboard");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("End time must be later than start time!");
+                    alert.showAndWait();
+                }
+            }
+
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("All fields are required.");
+                alert.showAndWait();
+            }
         }
-        catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("All fields are required.");
-            alert.showAndWait();
+        catch (NullPointerException | IOException e) {
+            e.printStackTrace();
         }
-
-
     }
 
     public void onExit(ActionEvent actionEvent) throws IOException {
