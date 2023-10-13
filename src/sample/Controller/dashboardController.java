@@ -170,6 +170,26 @@ public class dashboardController implements Initializable {
     }
 
     public void onAppointmentUpdate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/updateAppointmentForm.fxml"));
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+
+            updateAppointmentController updateAppointmentController = loader.getController();
+            updateAppointmentController.sendAppointment(appointmentTable.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("Update an Appointment");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (NullPointerException | IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please select an appointment from the list");
+            alert.showAndWait();
+        }
     }
 
     public void onAppointmentDelete(ActionEvent actionEvent) {

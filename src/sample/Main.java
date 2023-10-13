@@ -28,10 +28,4 @@ public class Main extends Application {
     }
 }
 
-// todo: finish writing sendAppointment
-
-
-
-
-
-// todo: check deleteCustomer method (where to put delete call)
+// todo make sure sendAppointment works

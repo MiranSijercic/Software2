@@ -74,7 +74,9 @@ public class updateAppointmentController implements Initializable {
                 contactCombo.setValue(contact);
             }
         }
-
+        datePicker.setValue(appointment.getStart().toLocalDateTime().toLocalDate());
+        startCombo.setValue(appointment.getStart().toLocalDateTime().toLocalTime());
+        endCombo.setValue(appointment.getEnd().toLocalDateTime().toLocalTime());
 
     }
 

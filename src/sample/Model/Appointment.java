@@ -1,6 +1,12 @@
 package sample.Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Timestamp;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class Appointment {
     private int appointmentID;
@@ -17,7 +23,6 @@ public class Appointment {
     private int customerID;
     private int userID;
     private int contactID;
-
 
     public Appointment(int appointmentID, String title, String description, String location, String type,
                        Timestamp start, Timestamp end, Timestamp createDate, String createdBy, Timestamp lastUpdate,
@@ -148,5 +153,20 @@ public class Appointment {
 
     public void setContactID(int contactID) {
         this.contactID = contactID;
+    }
+
+    public ObservableList<LocalTime> convertedStartTimes() {
+        ObservableList<LocalTime> startTimes = FXCollections.observableArrayList();
+        for (int hour = 8; hour < 22; hour++) {
+            startTimes.add(LocalTime.of(hour, 0));
+            startTimes.add(LocalTime.of(hour, 15));
+            startTimes.add(LocalTime.of(hour, 30));
+            startTimes.add(LocalTime.of(hour, 45));
+        }
+        return startTimes;
+    }
+
+    public ObservableList<LocalTime> convertedEndTimes() {
+        return null;
     }
 }
