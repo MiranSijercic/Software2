@@ -2,8 +2,8 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -155,13 +155,23 @@ public class Appointment {
         this.contactID = contactID;
     }
 
+}
+/*
     public ObservableList<LocalTime> convertedStartTimes() {
+        LocalDate startDate = LocalDate.now();
+        LocalTime startTime = LocalTime.of(8, 0);
+        ZoneId localZoneID = ZoneId.systemDefault();
+        ZonedDateTime localZDT = ZonedDateTime.of(LocalDate.now(), startTime, localZoneID);
+
+        ZoneId eastZID = ZoneId.of("America/New_York");
+        ZonedDateTime eastZDT = ZonedDateTime.ofInstant(localZDT.toInstant(), eastZID);
+
+        int businessHourStart = eastZDT.toLocalTime().getHour();
+
         ObservableList<LocalTime> startTimes = FXCollections.observableArrayList();
-        for (int hour = 8; hour < 22; hour++) {
-            startTimes.add(LocalTime.of(hour, 0));
-            startTimes.add(LocalTime.of(hour, 15));
-            startTimes.add(LocalTime.of(hour, 30));
-            startTimes.add(LocalTime.of(hour, 45));
+        for (int i = businessHourStart; i <= businessHourStart + 14; i++) {
+            startTimes.add(LocalTime.of(i, 0));
+
         }
         return startTimes;
     }
@@ -169,4 +179,4 @@ public class Appointment {
     public ObservableList<LocalTime> convertedEndTimes() {
         return null;
     }
-}
+*/

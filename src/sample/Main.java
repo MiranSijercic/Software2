@@ -9,6 +9,7 @@ import sample.Utilities.JDBC;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class Main extends Application {
 
@@ -23,6 +24,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         // Locale.setDefault(Locale.FRANCE);
+        // TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
         JDBC.makeConnection();
         launch(args);
     }

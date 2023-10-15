@@ -5,6 +5,10 @@ import javafx.collections.ObservableList;
 import sample.Model.Appointment;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public abstract class AppointmentQuery {
 
@@ -94,6 +98,20 @@ public abstract class AppointmentQuery {
         }
 
         return allAppointments;
+    }
+
+    public static ObservableList<LocalTime> convertedTimes() {
+        ZonedDateTime openingTimeEastern = ZonedDateTime.of(LocalDate.now(), LocalTime.of(8,0), ZoneId.of("America/New_York"));
+
+        ZonedDateTime openingTimeLocal = openingTimeEastern.withZoneSameInstant(ZoneId.systemDefault());
+        int businessHourStart = openingTimeLocal.toLocalTime().getHour();
+
+        ObservableList<LocalTime> startTimes = FXCollections.observableArrayList();
+        for (int i = businessHourStart; i <= businessHourStart + 14; i++) {
+           startTimes.add(LocalTime.of(i, 0));
+
+        }
+        return startTimes;
     }
 
 }

@@ -9,12 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Model.Appointment;
 import sample.Model.Contact;
 import sample.Model.Customer;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.ContactQuery;
 import sample.Utilities.CustomerQuery;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,7 +26,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class addAppointmentController implements Initializable {
-
     public TextField titleField;
     public TextField descriptionField;
     public TextField locationField;
@@ -44,18 +43,11 @@ public class addAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<LocalTime> times = FXCollections.observableArrayList();
-        for (int hour = 8; hour < 22; hour++) {
-            times.add(LocalTime.of(hour, 0));
-            times.add(LocalTime.of(hour, 15));
-            times.add(LocalTime.of(hour, 30));
-            times.add(LocalTime.of(hour, 45));
-        }
         try {
             customerCombo.setItems(CustomerQuery.getAllCustomers());
             contactCombo.setItems(ContactQuery.getAllContacts());
-            startCombo.setItems(times);
-            endCombo.setItems(times);
+            startCombo.setItems(AppointmentQuery.convertedTimes());
+            endCombo.setItems(AppointmentQuery.convertedTimes());
 
         } catch (SQLException e) {
             e.printStackTrace();
