@@ -3,21 +3,25 @@ package sample.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Contact;
 import sample.Model.Customer;
+import sample.Utilities.AppointmentQuery;
 import sample.Utilities.ContactQuery;
 import sample.Utilities.CustomerQuery;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class updateAppointmentController implements Initializable {
@@ -40,18 +44,11 @@ public class updateAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<LocalTime> times = FXCollections.observableArrayList();
-        for (int hour = 8; hour < 22; hour++) {
-            times.add(LocalTime.of(hour, 0));
-            times.add(LocalTime.of(hour, 15));
-            times.add(LocalTime.of(hour, 30));
-            times.add(LocalTime.of(hour, 45));
-        }
         try {
             customerCombo.setItems(CustomerQuery.getAllCustomers());
             contactCombo.setItems(ContactQuery.getAllContacts());
-            startCombo.setItems(times);
-            endCombo.setItems(times);
+            startCombo.setItems(AppointmentQuery.convertedTimes());
+            endCombo.setItems(AppointmentQuery.convertedTimes());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,12 +74,27 @@ public class updateAppointmentController implements Initializable {
         datePicker.setValue(appointment.getStart().toLocalDateTime().toLocalDate());
         startCombo.setValue(appointment.getStart().toLocalDateTime().toLocalTime());
         endCombo.setValue(appointment.getEnd().toLocalDateTime().toLocalTime());
-
     }
 
     public void onSave(ActionEvent actionEvent) {
     }
 
-    public void onExit(ActionEvent actionEvent) {
+    public void onExit(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Return");
+        alert.setHeaderText("Return to Dashboard");
+        alert.setContentText("Do you want to return to the dashboard?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
+            Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 615, 700);
+            stage.setTitle("Dashboard");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            alert.close();
+        }
     }
 }

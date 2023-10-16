@@ -63,13 +63,14 @@ public class dashboardController implements Initializable {
     public Button appointmentUpdate;
     public Button appointmentDelete;
     public Button exit;
-    public TextField customerSearch;
-    public TextField appointmentSearch;
+
+    public RadioButton weekSortRadio;
+    public RadioButton monthSortRadio;
+    public RadioButton showAllRadio;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             customerTable.setItems(CustomerQuery.getAllCustomers());
             customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
@@ -213,11 +214,13 @@ public class dashboardController implements Initializable {
         }
     }
 
-    public void onCustomerSearch(ActionEvent actionEvent) {
+    public void onWeeklyRadio(ActionEvent actionEvent) {
     }
 
-    public void onAppointmentSearch(ActionEvent actionEvent) {
+    public void onMonthlyRadio(ActionEvent actionEvent) {
     }
+
+    public void onShowAllRadio(ActionEvent actionEvent) {}
 
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -236,6 +239,5 @@ public class dashboardController implements Initializable {
         else {
             alert.close();
         }
-
     }
 }

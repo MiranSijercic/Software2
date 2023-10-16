@@ -52,7 +52,6 @@ public class addAppointmentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void onSave(ActionEvent actionEvent) throws SQLException {

@@ -30,4 +30,4 @@ public class Main extends Application {
     }
 }
 
-// todo make sure sendAppointment works
+// todo work on customerDelete
