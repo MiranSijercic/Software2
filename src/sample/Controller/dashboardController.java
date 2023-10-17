@@ -24,7 +24,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
-
     public static String currentUserName;
     public static int currentUserID;
 
@@ -68,6 +67,7 @@ public class dashboardController implements Initializable {
     public RadioButton monthSortRadio;
     public RadioButton showAllRadio;
 
+    public ToggleGroup appointmentSortToggle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,12 +99,12 @@ public class dashboardController implements Initializable {
             appointmentCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
             appointmentUserIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
             appointmentContactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
-            
+
+            showAllRadio.setSelected(true);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        
     }
 
     public void onCustomerAdd(ActionEvent actionEvent) throws IOException {
@@ -146,19 +146,24 @@ public class dashboardController implements Initializable {
                 if (appointment.getCustomerID() == customer.getCustomerID()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setContentText("Customer has associated Appointments, please delete these Appointments first");
+                    alert.setContentText(customer.getCustomerName() + " has associated Appointments, please delete these Appointments first");
                     alert.showAndWait();
-                    break;
+                    return;
                 }
             }
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Update");
+            alert.setContentText("Customer data for " + customer.getCustomerName() + " has been deleted");
+            alert.showAndWait();
+
             CustomerQuery.delete(customer.getCustomerID());
             customerTable.setItems(CustomerQuery.getAllCustomers());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onAppointmentAdd(ActionEvent actionEvent) throws IOException {
@@ -196,12 +201,19 @@ public class dashboardController implements Initializable {
     public void onAppointmentDelete(ActionEvent actionEvent) {
         try {
             Appointment appointment = appointmentTable.getSelectionModel().getSelectedItem();
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete");
             alert.setHeaderText("Delete Appointment?");
             alert.setContentText("Are you sure you want to delete this appointment?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Update");
+                alert2.setContentText("Appoint with ID: " + appointment.getAppointmentID() + " and of Type: " +
+                        appointment.getType() + " has been canceled.");
+                alert2.showAndWait();
+
                 AppointmentQuery.delete(appointment.getAppointmentID());
                 appointmentTable.setItems(AppointmentQuery.getAllAppointments());
             }
@@ -214,10 +226,10 @@ public class dashboardController implements Initializable {
         }
     }
 
-    public void onWeeklyRadio(ActionEvent actionEvent) {
+    public void onWeekRadio(ActionEvent actionEvent) {
     }
 
-    public void onMonthlyRadio(ActionEvent actionEvent) {
+    public void onMonthRadio(ActionEvent actionEvent) {
     }
 
     public void onShowAllRadio(ActionEvent actionEvent) {}

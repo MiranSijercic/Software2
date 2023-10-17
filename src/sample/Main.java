@@ -24,10 +24,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         // Locale.setDefault(Locale.FRANCE);
-        // TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Chicago"));
         JDBC.makeConnection();
         launch(args);
     }
 }
 
-// todo work on customerDelete
+// todo start/end time overlap for appointments on addAppointment. Copy for updatedAppointment

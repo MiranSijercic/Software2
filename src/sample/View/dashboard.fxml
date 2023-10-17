@@ -5,6 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -71,9 +72,13 @@
       <Label layoutX="287.0" layoutY="343.0" text="Sort By:" />
       <HBox alignment="CENTER_LEFT" layoutX="341.0" layoutY="334.0" prefHeight="35.0" prefWidth="221.0" spacing="20.0">
          <children>
-            <RadioButton fx:id="weekSortRadio" mnemonicParsing="false" text="Week" />
-            <RadioButton fx:id="monthSortRadio" mnemonicParsing="false" text="Month" />
-            <RadioButton fx:id="showAllRadio" alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Show All" />
+            <RadioButton fx:id="weekSortRadio" mnemonicParsing="false" onAction="#onWeekRadio" text="Week">
+               <toggleGroup>
+                  <ToggleGroup fx:id="appointmentSortToggle" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="monthSortRadio" mnemonicParsing="false" onAction="#onMonthRadio" text="Month" toggleGroup="$appointmentSortToggle" />
+            <RadioButton fx:id="showAllRadio" alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onShowAllRadio" text="Show All" toggleGroup="$appointmentSortToggle" />
          </children>
       </HBox>
    </children>

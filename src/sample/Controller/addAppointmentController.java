@@ -75,23 +75,44 @@ public class addAppointmentController implements Initializable {
                 int userID = dashboardController.currentUserID;
                 int contactID = contactCombo.getSelectionModel().getSelectedItem().getContactID();
 
-                if (startTimestamp.before(endTimestamp)) {
-                    AppointmentQuery.insert(title, description, location, type, startTimestamp, endTimestamp, createDate, createdBy,
-                            lastUpdate, lastUpdatedBy, customerID, userID, contactID);
-                    Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
-                    Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                    Scene scene = new Scene(root, 615, 700);
-                    stage.setTitle("Dashboard");
-                    stage.setScene(scene);
-                    stage.show();
-                }
-
-                else {
+                // check that start time is before end time
+                if (!startTimestamp.before(endTimestamp)) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText("End time must be later than start time!");
                     alert.showAndWait();
+                    return;
                 }
+                // check that Customer does not have an existing appointment at this start time
+                for (Appointment appointment: AppointmentQuery.getAllAppointments()) {
+                    if (appointment.getCustomerID() == customerID && appointment.getStart().compareTo(startTimestamp) == 0) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setContentText("Customer already has an appointment starting at this time");
+                        alert.showAndWait();
+                        return;
+                    }
+                }
+
+                // check that appointment end time does not
+                for (Appointment appointment: AppointmentQuery.getAllAppointments()) {
+                    if (appointment.getCustomerID() == customerID && appointment.getStart().compareTo(startTimestamp) == 0) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setContentText("Customer already has an appointment starting at this time");
+                        alert.showAndWait();
+                        return;
+                    }
+                }
+
+                AppointmentQuery.insert(title, description, location, type, startTimestamp, endTimestamp, createDate, createdBy,
+                        lastUpdate, lastUpdatedBy, customerID, userID, contactID);
+                Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 615, 700);
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                stage.show();
             }
 
             else {
