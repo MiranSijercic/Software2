@@ -30,4 +30,5 @@ public class Main extends Application {
     }
 }
 
+// 15 minute alert triggers for all appointments
 // todo start/end time overlap for appointments on addAppointment. Copy for updatedAppointment

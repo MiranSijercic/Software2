@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -101,6 +102,19 @@ public class dashboardController implements Initializable {
             appointmentContactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
             showAllRadio.setSelected(true);
+
+//            for (Appointment appointment:AppointmentQuery.getAllAppointments()) {
+//                LocalDateTime loginTime = LocalDateTime.now();
+//                if (loginTime.plusMinutes(15).isEqual(appointment.getStart().toLocalDateTime()) ||
+//                        loginTime.plusMinutes(15).isAfter(appointment.getStart().toLocalDateTime())) {
+//                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setTitle("Upcoming Appointment Reminder");
+//                    alert.setContentText("Appointment with ID:" + appointment.getAppointmentID() + " is today "
+//                        + appointment.getStart().toLocalDateTime().toLocalDate() + " at " +
+//                            appointment.getStart().toLocalDateTime().toLocalTime());
+//                    alert.showAndWait();
+//                }
+//            }
         }
         catch (SQLException e) {
             e.printStackTrace();

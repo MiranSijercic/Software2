@@ -75,7 +75,7 @@ public class addAppointmentController implements Initializable {
                 int userID = dashboardController.currentUserID;
                 int contactID = contactCombo.getSelectionModel().getSelectedItem().getContactID();
 
-                // check that start time is before end time
+                // check that selected start time is before selected end time
                 if (!startTimestamp.before(endTimestamp)) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -83,23 +83,40 @@ public class addAppointmentController implements Initializable {
                     alert.showAndWait();
                     return;
                 }
-                // check that Customer does not have an existing appointment at this start time
+                // checking for appointment overlap with the provided start time
                 for (Appointment appointment: AppointmentQuery.getAllAppointments()) {
-                    if (appointment.getCustomerID() == customerID && appointment.getStart().compareTo(startTimestamp) == 0) {
+                    if (appointment.getCustomerID() == customerID &&
+                            (appointment.getStart().toLocalDateTime().isBefore(startDateTime) ||
+                                appointment.getStart().toLocalDateTime().isEqual(startDateTime)) &&
+                                    startDateTime.isBefore(appointment.getEnd().toLocalDateTime())) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
-                        alert.setContentText("Customer already has an appointment starting at this time");
+                        alert.setContentText("Customer has an existing appointment during the requested start time");
                         alert.showAndWait();
                         return;
                     }
                 }
-
-                // check that appointment end time does not
+                // checking for appointment overlap with the provided end time
                 for (Appointment appointment: AppointmentQuery.getAllAppointments()) {
-                    if (appointment.getCustomerID() == customerID && appointment.getStart().compareTo(startTimestamp) == 0) {
+                    if (appointment.getCustomerID() == customerID &&
+                            (endDateTime.isAfter(appointment.getStart().toLocalDateTime()) &&
+                                    (endDateTime.isBefore(appointment.getEnd().toLocalDateTime()) ||
+                                            endDateTime.isEqual(appointment.getEnd().toLocalDateTime())))) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
-                        alert.setContentText("Customer already has an appointment starting at this time");
+                        alert.setContentText("Customer has an existing appointment starting before the requested end time");
+                        alert.showAndWait();
+                        return;
+                    }
+                }
+                // checking for appointment overlap with both provided start and end times (appointment does not encompass existing appointment)
+                for (Appointment appointment: AppointmentQuery.getAllAppointments()) {
+                    if (appointment.getCustomerID() == customerID &&
+                            (startDateTime.isBefore(appointment.getStart().toLocalDateTime()) &&
+                                    endDateTime.isAfter(appointment.getEnd().toLocalDateTime()))) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setContentText("Customer has an existing appointment within the requested window");
                         alert.showAndWait();
                         return;
                     }
