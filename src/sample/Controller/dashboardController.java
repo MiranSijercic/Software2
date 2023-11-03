@@ -62,13 +62,14 @@ public class dashboardController implements Initializable {
     public Button appointmentAdd;
     public Button appointmentUpdate;
     public Button appointmentDelete;
+
+    public Button sortedAppointments;
+    public Button appointmentsByType;
+    public Button appointmentsByDuration;
+    public Button contactSchedules;
+
     public Button exit;
 
-    public RadioButton weekSortRadio;
-    public RadioButton monthSortRadio;
-    public RadioButton showAllRadio;
-
-    public ToggleGroup appointmentSortToggle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,12 +102,10 @@ public class dashboardController implements Initializable {
             appointmentUserIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
             appointmentContactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
-            showAllRadio.setSelected(true);
-
+//            LocalDateTime loginLDT = LocalDateTime.now();
 //            for (Appointment appointment:AppointmentQuery.getAllAppointments()) {
-//                LocalDateTime loginTime = LocalDateTime.now();
-//                if (loginTime.plusMinutes(15).isEqual(appointment.getStart().toLocalDateTime()) ||
-//                        loginTime.plusMinutes(15).isAfter(appointment.getStart().toLocalDateTime())) {
+//                if (loginLDT.toLocalDate().isEqual(appointment.getStart().toLocalDateTime().toLocalDate())
+//                    && loginLDT.plusMinutes(15).isEqual(appointment.getStart().toLocalDateTime().toLocalTime()) ) {
 //                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //                    alert.setTitle("Upcoming Appointment Reminder");
 //                    alert.setContentText("Appointment with ID:" + appointment.getAppointmentID() + " is today "
@@ -240,13 +239,17 @@ public class dashboardController implements Initializable {
         }
     }
 
-    public void onWeekRadio(ActionEvent actionEvent) {
+    public void onSortedAppointments(ActionEvent actionEvent) {
     }
 
-    public void onMonthRadio(ActionEvent actionEvent) {
+    public void onAppointmentsByType(ActionEvent actionEvent) {
     }
 
-    public void onShowAllRadio(ActionEvent actionEvent) {}
+    public void onAppointmentsByDuration(ActionEvent actionEvent) {
+    }
+
+    public void onContactSchedules(ActionEvent actionEvent) {
+    }
 
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -266,4 +269,5 @@ public class dashboardController implements Initializable {
             alert.close();
         }
     }
+
 }

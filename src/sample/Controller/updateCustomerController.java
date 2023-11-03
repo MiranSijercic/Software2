@@ -95,7 +95,7 @@ public class updateCustomerController implements Initializable {
 
                 Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
                 Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 615, 700);
+                Scene scene = new Scene(root, 900, 700);
                 stage.setTitle("Dashboard");
                 stage.setScene(scene);
                 stage.show();
@@ -122,7 +122,7 @@ public class updateCustomerController implements Initializable {
         if (result.get() == ButtonType.OK) {
             Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
             Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 615, 700);
+            Scene scene = new Scene(root, 900, 700);
             stage.setTitle("Dashboard");
             stage.setScene(scene);
             stage.show();
