@@ -1,5 +1,7 @@
 package sample.Utilities;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,11 +12,11 @@ import java.util.List;
 
 public abstract class UserQuery {
 
-    public static List<User> getAllUsers() throws SQLException {
+    public static ObservableList<User> getAllUsers() throws SQLException {
+        ObservableList<User> allUsers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM users";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        List<User> users = new ArrayList<User>();
         while (rs.next()) {
             int userID = rs.getInt("User_ID");
             String userName = rs.getString("User_Name");
@@ -25,9 +27,9 @@ public abstract class UserQuery {
             String lastUpdatedBy = rs.getString("Last_Updated_By");
 
             User user = new User(userID, userName, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
-            users.add(user);
+            allUsers.add(user);
         }
-        return users;
+        return allUsers;
     }
 
     public static boolean foundUser(String userName, String password) throws SQLException {

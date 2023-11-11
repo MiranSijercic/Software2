@@ -10,41 +10,52 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
+import sample.Model.User;
 import sample.Utilities.AppointmentQuery;
+import sample.Utilities.UserQuery;
+import sample.Utilities.UtilityQueries;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class userReportController implements Initializable {
-    ObservableList<Integer> userIDList = FXCollections.observableArrayList();
-    ObservableList<Integer> appointmentCount = FXCollections.observableArrayList();
+    public ComboBox<User> userCombo;
+    public ComboBox<Month> monthCombo;
 
-    public TableView<Integer> table;
-    public TableColumn<Integer, Integer> userIDColumn;
-    public TableColumn<Integer, Integer> appointmentColumn;
+    public TextField countField;
+
     public Button returnButton;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         try {
-            for (Appointment appointment: AppointmentQuery.getAllAppointments()) {
-                userIDList.add(appointment.getUserID());
-            }
-
+            userCombo.setItems(UserQuery.getAllUsers());
+            monthCombo.getItems().addAll(Month.values());
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
-    public void onReturnButton(ActionEvent actionEvent) throws IOException {
+    public void onUserCombo(ActionEvent actionEvent) throws SQLException {
+        if (!monthCombo.getSelectionModel().isEmpty()) {
+            countField.setText(String.valueOf(UtilityQueries.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
+                    monthCombo.getSelectionModel().getSelectedIndex() + 1)));
+        }
+    }
+
+    public void onMonthCombo(ActionEvent actionEvent) throws SQLException {
+        if (!userCombo.getSelectionModel().isEmpty()) {
+            countField.setText(String.valueOf(UtilityQueries.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
+                    monthCombo.getSelectionModel().getSelectedIndex() + 1)));
+        }
+    }
+
+    public void onReturn(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");
         alert.setHeaderText("Return to Dashboard");
@@ -61,4 +72,5 @@ public class userReportController implements Initializable {
             alert.close();
         }
     }
+
 }

@@ -3,7 +3,6 @@ package sample.Utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Model.Appointment;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,12 +25,18 @@ public abstract class UtilityQueries {
         return startTimes;
     }
 
-    public static int monthAndTypeSelect (Month month, String type) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM appointments WHERE Type = ? AND MONTH(Start) = Month(now()) AND YEAR(Start) = YEAR(now())";
+    public static int monthAndTypeSelect (String type, int month) throws SQLException {
+        String sql = "SELECT COUNT(*) as row_count FROM appointments WHERE Type = ? AND MONTH(Start) = ? AND YEAR(Start) = YEAR(now())";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, type);
+        ps.setInt(2, month);
         ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt("row_count");
+            return count;
+        }
 
-        return -1;
+        return 0;
     }
 
     public static ObservableList<Appointment> appointmentByCurrentWeekSelect () throws SQLException {
@@ -61,6 +66,20 @@ public abstract class UtilityQueries {
         }
 
         return appointmentsByCurrentWeek;
+    }
+
+    public static int userAndMonthSelect (int userID, int month) throws SQLException {
+        String sql = "SELECT COUNT(*) as row_count FROM appointments WHERE User_ID = ? AND MONTH(Start) = ? AND YEAR(Start) = YEAR(now())";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, userID);
+        ps.setInt(2, month);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt("row_count");
+            return count;
+        }
+
+        return 0;
     }
 
 }

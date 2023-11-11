@@ -244,7 +244,13 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
-    public void onAppointmentsByUser(ActionEvent actionEvent) {
+    public void onAppointmentsByUser(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/userReportForm.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 420, 430);
+        stage.setTitle("Appointment Count by User");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onContactSchedules(ActionEvent actionEvent) {

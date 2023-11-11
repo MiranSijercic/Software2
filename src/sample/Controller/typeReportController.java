@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Utilities.AppointmentQuery;
+import sample.Utilities.UtilityQueries;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -44,15 +45,18 @@ public class typeReportController implements Initializable {
     }
 
     public void onMonthCombo(ActionEvent actionEvent) throws SQLException {
-        if (!typeCombo.getValue().isEmpty()) {
-
+        if (!typeCombo.getSelectionModel().isEmpty()) {
+            countField.setText(String.valueOf(UtilityQueries.monthAndTypeSelect(typeCombo.getSelectionModel().getSelectedItem(),
+                    monthCombo.getSelectionModel().getSelectedIndex() + 1)));
         }
     }
 
-    public void onTypeCombo(ActionEvent actionEvent) {
-
+    public void onTypeCombo(ActionEvent actionEvent) throws SQLException {
+        if (!monthCombo.getSelectionModel().isEmpty()) {
+            countField.setText(String.valueOf(UtilityQueries.monthAndTypeSelect(typeCombo.getSelectionModel().getSelectedItem(),
+                    monthCombo.getSelectionModel().getSelectedIndex() + 1)));
+        }
     }
-
     public void onReturn(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

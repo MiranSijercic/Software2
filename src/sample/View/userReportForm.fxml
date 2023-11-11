@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="385.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.userReportController">
-   <children>
-      <Label layoutX="71.0" layoutY="43.0" text="USER APPOINTMENT REPORT">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <TableView fx:id="table" layoutX="71.0" layoutY="113.0" prefHeight="200.0" prefWidth="254.0">
-        <columns>
-          <TableColumn fx:id="userIDColumn" prefWidth="81.0" text="USER ID" />
-          <TableColumn fx:id="appointmentColumn" prefWidth="172.0" text="APPOINTMENT COUNT" />
-        </columns>
-      </TableView>
-      <Button fx:id="returnButton" layoutX="301.0" layoutY="347.0" mnemonicParsing="false" onAction="#onReturnButton" text="RETURN" />
-   </children>
+<AnchorPane prefHeight="433.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.userReportController">
+    <children>
+        <Label layoutX="59.0" layoutY="45.0" text="Total Appointments Created By User">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="returnButton" layoutX="184.0" layoutY="345.0" mnemonicParsing="false" onAction="#onReturn" text="RETURN" />
+        <VBox layoutX="138.0" layoutY="110.0" prefHeight="200.0" prefWidth="152.0" spacing="50.0">
+            <children>
+                <ComboBox fx:id="userCombo" onAction="#onUserCombo" prefWidth="150.0" promptText="USER" />
+                <ComboBox fx:id="monthCombo" onAction="#onMonthCombo" prefWidth="150.0" promptText="MONTH" />
+                <TextField fx:id="countField" promptText="Appointments Created" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>
