@@ -30,5 +30,13 @@ public class Main extends Application {
     }
 }
 
+// 1 lambda is in onMonthCombo in sortedAppointmentsController
+
+
 // 15 minute alert triggers for all appointments
-// todo start/end time overlap for appointments on addAppointment. Copy for updatedAppointment
+// FILTERING: month as combobox? how does week need to work?
+// setting a tableview with observable lists instead of objects? see userReport
+// do we need to be able to sort by type WITH month?
+// is it enough to have contact schedule be a tableview as well?
+
+

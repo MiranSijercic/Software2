@@ -15,6 +15,8 @@ import sample.Model.Customer;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.ContactQuery;
 import sample.Utilities.CustomerQuery;
+import sample.Utilities.UtilityQueries;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -46,8 +48,8 @@ public class addAppointmentController implements Initializable {
         try {
             customerCombo.setItems(CustomerQuery.getAllCustomers());
             contactCombo.setItems(ContactQuery.getAllContacts());
-            startCombo.setItems(AppointmentQuery.convertedTimes());
-            endCombo.setItems(AppointmentQuery.convertedTimes());
+            startCombo.setItems(UtilityQueries.convertedTimes());
+            endCombo.setItems(UtilityQueries.convertedTimes());
 
         } catch (SQLException e) {
             e.printStackTrace();

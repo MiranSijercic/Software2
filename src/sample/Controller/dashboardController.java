@@ -65,11 +65,10 @@ public class dashboardController implements Initializable {
 
     public Button sortedAppointments;
     public Button appointmentsByType;
-    public Button appointmentsByDuration;
+    public Button appointmentsByUser;
     public Button contactSchedules;
 
     public Button exit;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,18 +101,6 @@ public class dashboardController implements Initializable {
             appointmentUserIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
             appointmentContactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
-//            LocalDateTime loginLDT = LocalDateTime.now();
-//            for (Appointment appointment:AppointmentQuery.getAllAppointments()) {
-//                if (loginLDT.toLocalDate().isEqual(appointment.getStart().toLocalDateTime().toLocalDate())
-//                    && loginLDT.plusMinutes(15).isEqual(appointment.getStart().toLocalDateTime().toLocalTime()) ) {
-//                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                    alert.setTitle("Upcoming Appointment Reminder");
-//                    alert.setContentText("Appointment with ID:" + appointment.getAppointmentID() + " is today "
-//                        + appointment.getStart().toLocalDateTime().toLocalDate() + " at " +
-//                            appointment.getStart().toLocalDateTime().toLocalTime());
-//                    alert.showAndWait();
-//                }
-//            }
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -239,13 +226,25 @@ public class dashboardController implements Initializable {
         }
     }
 
-    public void onSortedAppointments(ActionEvent actionEvent) {
+    public void onSortedAppointments(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/sortedAppointmentsForm.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 650, 450);
+        stage.setTitle("Appointment Sort");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onAppointmentsByType(ActionEvent actionEvent) {
+    public void onAppointmentsByType(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/typeReportForm.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 420, 430);
+        stage.setTitle("Appointments by Type");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onAppointmentsByDuration(ActionEvent actionEvent) {
+    public void onAppointmentsByUser(ActionEvent actionEvent) {
     }
 
     public void onContactSchedules(ActionEvent actionEvent) {
