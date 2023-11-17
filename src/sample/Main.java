@@ -33,10 +33,7 @@ public class Main extends Application {
 // 1 lambda is in onMonthCombo in sortedAppointmentsController
 
 
-// 15 minute alert triggers for all appointments
-// FILTERING: month as combobox? how does week need to work?
-// setting a tableview with observable lists instead of objects? see userReport
-// do we need to be able to sort by type WITH month?
-// is it enough to have contact schedule be a tableview as well?
+//todo: Finish 15 minute alert
+//todo: Confirm that weekly sorts from sortedAppointments and contactSchedule are calendar vs static +7 days from login?
 
 

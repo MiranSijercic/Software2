@@ -8,13 +8,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Model.Appointment;
 import sample.Model.User;
+import sample.Utilities.AppointmentQuery;
 import sample.Utilities.UserQuery;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class logInController implements Initializable {
@@ -75,17 +80,37 @@ public class logInController implements Initializable {
             String userName = userNameField.getText();
             String password = passwordField.getText();
 
-            for (User user: UserQuery.getAllUsers()) {
+            for (User user : UserQuery.getAllUsers()) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                    LocalTime loginTime = LocalTime.now();
+                    for (Appointment appointment : AppointmentQuery.getAllAppointments()) {
+                        LocalTime appointmentStart = appointment.getStart().toLocalDateTime().toLocalTime();
+                        long timeDifference = ChronoUnit.MINUTES.between(appointmentStart, loginTime);
+                        if ((timeDifference * -1) > 0 && (timeDifference * -1) < 30) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Upcoming Appointment");
+                            alert.setContentText("Upcoming appointment with ID: " + appointment.getAppointmentID() + " on " + appointment.getStart().toLocalDateTime().toLocalDate()
+                                    + " at " + appointment.getStart().toLocalDateTime().toLocalTime());
+                            alert.showAndWait();
+                            break;
+                        }
+                    }
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Upcoming Appointment");
+                    alert.setContentText("There are no upcoming appointments");
+                    alert.showAndWait();
+
                     dashboardController.currentUserName = user.getUserName();
                     dashboardController.currentUserID = user.getUserID();
                     Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
-                    Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+                    Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 900, 700);
                     stage.setTitle("Dashboard");
                     stage.setScene(scene);
                     stage.show();
                     break;
+
                 }
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);

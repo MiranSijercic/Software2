@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -253,7 +254,13 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
-    public void onContactSchedules(ActionEvent actionEvent) {
+    public void onContactSchedules(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/contactScheduleForm.fxml"));
+        Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 440);
+        stage.setTitle("Contact Weekly Schedule");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onExit(ActionEvent actionEvent) throws IOException {
