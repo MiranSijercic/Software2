@@ -1,7 +1,5 @@
 package sample.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +13,7 @@ import sample.Model.Customer;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.ContactQuery;
 import sample.Utilities.CustomerQuery;
-import sample.Utilities.UtilityQueries;
+import sample.Utilities.UtilityMethods;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,8 +47,8 @@ public class updateAppointmentController implements Initializable {
         try {
             customerCombo.setItems(CustomerQuery.getAllCustomers());
             contactCombo.setItems(ContactQuery.getAllContacts());
-            startCombo.setItems(UtilityQueries.convertedTimes());
-            endCombo.setItems(UtilityQueries.convertedTimes());
+            startCombo.setItems(UtilityMethods.convertedTimes());
+            endCombo.setItems(UtilityMethods.convertedTimes());
 
         } catch (SQLException e) {
             e.printStackTrace();

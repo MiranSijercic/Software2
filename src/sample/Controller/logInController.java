@@ -12,6 +12,8 @@ import sample.Model.Appointment;
 import sample.Model.User;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.UserQuery;
+import sample.Utilities.UtilityMethods;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -101,6 +103,8 @@ public class logInController implements Initializable {
                     alert.setContentText("There are no upcoming appointments");
                     alert.showAndWait();
 
+                    UtilityMethods.logToFile("Login attempt: Successful. Time: " + LocalDateTime.now() + ". User ID: "
+                            + user.getUserID());
                     dashboardController.currentUserName = user.getUserName();
                     dashboardController.currentUserID = user.getUserID();
                     Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
@@ -109,17 +113,16 @@ public class logInController implements Initializable {
                     stage.setTitle("Dashboard");
                     stage.setScene(scene);
                     stage.show();
-                    break;
+                    return;
 
                 }
-
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(error);
-                alert.setContentText(errorMessage);
-                alert.showAndWait();
-                break;
             }
 
+            UtilityMethods.logToFile("Login attempt: Unsuccessful. Time: " + LocalDateTime.now());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(error);
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
         }
         catch (NumberFormatException | SQLException e) {
             e.printStackTrace();

@@ -3,13 +3,18 @@ package sample.Utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Model.Appointment;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
 
-public abstract class UtilityQueries {
+public abstract class UtilityMethods {
 
     public static ObservableList<LocalTime> convertedTimes() {
         ZonedDateTime openingTimeEastern = ZonedDateTime.of(LocalDate.now(), LocalTime.of(8,0), ZoneId.of("America/New_York"));
@@ -84,7 +89,7 @@ public abstract class UtilityQueries {
 
     public static ObservableList<Appointment> customerScheduleSelect (int contactID) throws SQLException {
         ObservableList<Appointment> contactWeekSchedule = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM appointments WHERE Contact_ID = ? AND YEAR(Start) = YEAR(CURDATE()) AND WEEK(Start) = WEEK(CURDATE())";
+        String sql = "SELECT * FROM appointments WHERE Contact_ID = ? AND Start >= NOW()";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ps.setInt(1, contactID);
         ResultSet rs = ps.executeQuery();
@@ -109,6 +114,14 @@ public abstract class UtilityQueries {
             contactWeekSchedule.add(appointment);
         }
         return contactWeekSchedule;
+    }
+
+    public static void logToFile(String message) throws IOException {
+        File logFile = new File("login_activity.txt");
+        FileWriter fileWriter = new FileWriter(logFile, true);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(message);
+        printWriter.close();
     }
 
 }

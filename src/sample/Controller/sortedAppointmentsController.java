@@ -12,16 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Utilities.AppointmentQuery;
-import sample.Utilities.UtilityQueries;
+import sample.Utilities.UtilityMethods;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -85,7 +82,7 @@ public class sortedAppointmentsController implements Initializable {
 
     public void onWeekRadio(ActionEvent actionEvent) throws SQLException {
         appointmentTable.setItems(AppointmentQuery.getAllAppointments());
-        appointmentTable.setItems(UtilityQueries.appointmentByCurrentWeekSelect());
+        appointmentTable.setItems(UtilityMethods.appointmentByCurrentWeekSelect());
     }
 
     public void onShowAllRadio(ActionEvent actionEvent) throws SQLException {

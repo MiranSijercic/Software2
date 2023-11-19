@@ -1,7 +1,5 @@
 package sample.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,11 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.Model.Appointment;
 import sample.Model.User;
-import sample.Utilities.AppointmentQuery;
 import sample.Utilities.UserQuery;
-import sample.Utilities.UtilityQueries;
+import sample.Utilities.UtilityMethods;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,14 +39,14 @@ public class userReportController implements Initializable {
 
     public void onUserCombo(ActionEvent actionEvent) throws SQLException {
         if (!monthCombo.getSelectionModel().isEmpty()) {
-            countField.setText(String.valueOf(UtilityQueries.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
+            countField.setText(String.valueOf(UtilityMethods.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
                     monthCombo.getSelectionModel().getSelectedIndex() + 1)));
         }
     }
 
     public void onMonthCombo(ActionEvent actionEvent) throws SQLException {
         if (!userCombo.getSelectionModel().isEmpty()) {
-            countField.setText(String.valueOf(UtilityQueries.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
+            countField.setText(String.valueOf(UtilityMethods.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
                     monthCombo.getSelectionModel().getSelectedIndex() + 1)));
         }
     }

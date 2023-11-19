@@ -27,6 +27,8 @@ public class Main extends Application {
         TimeZone.setDefault(TimeZone.getTimeZone("America/Chicago"));
         JDBC.makeConnection();
         launch(args);
+
+        String fileName = "login_activity.txt", record;
     }
 }
 
@@ -35,5 +37,5 @@ public class Main extends Application {
 
 //todo: Finish 15 minute alert
 //todo: Confirm that weekly sorts from sortedAppointments and contactSchedule are calendar vs static +7 days from login?
-
+//todo: find another lambda opportunity
 

@@ -10,9 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Contact;
-import sample.Utilities.AppointmentQuery;
 import sample.Utilities.ContactQuery;
-import sample.Utilities.UtilityQueries;
+import sample.Utilities.UtilityMethods;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,7 +53,7 @@ public class contactScheduleController implements Initializable {
     }
 
     public void onContactCombo(ActionEvent actionEvent) throws SQLException {
-        appointmentTable.setItems(UtilityQueries.customerScheduleSelect(contactCombo.getSelectionModel().getSelectedItem().getContactID()));
+        appointmentTable.setItems(UtilityMethods.customerScheduleSelect(contactCombo.getSelectionModel().getSelectedItem().getContactID()));
     }
 
     public void onReturn(ActionEvent actionEvent) throws IOException {
