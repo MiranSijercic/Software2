@@ -53,7 +53,7 @@ public class contactScheduleController implements Initializable {
     }
 
     public void onContactCombo(ActionEvent actionEvent) throws SQLException {
-        appointmentTable.setItems(UtilityMethods.customerScheduleSelect(contactCombo.getSelectionModel().getSelectedItem().getContactID()));
+        appointmentTable.setItems(UtilityMethods.contactScheduleSelect(contactCombo.getSelectionModel().getSelectedItem().getContactID()));
     }
 
     public void onReturn(ActionEvent actionEvent) throws IOException {

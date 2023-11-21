@@ -1,0 +1,2 @@
+Login attempt: Successful. Time: 2023-11-21T11:41:44.209724800. User ID: 1
+Login attempt: Successful. Time: 2023-11-21T11:48:42.921720200. User ID: 1

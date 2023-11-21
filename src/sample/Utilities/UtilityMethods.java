@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,7 +89,7 @@ public abstract class UtilityMethods {
         return 0;
     }
 
-    public static ObservableList<Appointment> customerScheduleSelect (int contactID) throws SQLException {
+    public static ObservableList<Appointment> contactScheduleSelect (int contactID) throws SQLException {
         ObservableList<Appointment> contactWeekSchedule = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Contact_ID = ? AND Start >= NOW()";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

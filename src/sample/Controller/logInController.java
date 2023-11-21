@@ -87,14 +87,25 @@ public class logInController implements Initializable {
                     LocalTime loginTime = LocalTime.now();
                     for (Appointment appointment : AppointmentQuery.getAllAppointments()) {
                         LocalTime appointmentStart = appointment.getStart().toLocalDateTime().toLocalTime();
-                        long timeDifference = ChronoUnit.MINUTES.between(appointmentStart, loginTime);
-                        if ((timeDifference * -1) > 0 && (timeDifference * -1) < 30) {
+                        long timeDifference = java.time.Duration.between(loginTime, appointmentStart).toMinutes();;
+                        if (timeDifference <= 15 && timeDifference >= 0) {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Upcoming Appointment");
-                            alert.setContentText("Upcoming appointment with ID: " + appointment.getAppointmentID() + " on " + appointment.getStart().toLocalDateTime().toLocalDate()
+                            alert.setContentText("Upcoming appointment with ID: " + appointment.getAppointmentID() + " is on " + appointment.getStart().toLocalDateTime().toLocalDate()
                                     + " at " + appointment.getStart().toLocalDateTime().toLocalTime());
                             alert.showAndWait();
-                            break;
+
+                            UtilityMethods.logToFile("Login attempt: Successful. Time: " + LocalDateTime.now() + ". User ID: "
+                                    + user.getUserID());
+                            dashboardController.currentUserName = user.getUserName();
+                            dashboardController.currentUserID = user.getUserID();
+                            Parent root = FXMLLoader.load(getClass().getResource("../View/dashboard.fxml"));
+                            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                            Scene scene = new Scene(root, 900, 700);
+                            stage.setTitle("Dashboard");
+                            stage.setScene(scene);
+                            stage.show();
+                            return;
                         }
                     }
 
@@ -114,7 +125,6 @@ public class logInController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
                     return;
-
                 }
             }
 
@@ -134,12 +144,6 @@ public class logInController implements Initializable {
         alert.setTitle(exit);
         alert.setHeaderText(exitHeader);
         alert.setContentText(exitMessage);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Platform.exit();
-        }
-        else {
-            alert.close();
-        }
+        alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> System.exit(0));
     }
 }
