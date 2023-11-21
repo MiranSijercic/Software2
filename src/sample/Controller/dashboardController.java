@@ -25,6 +25,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Dashboard screen.
+ * User is directed here after successful login. This serves as the hub to access all other parts of the application.
+ */
 public class dashboardController implements Initializable {
     public static String currentUserName;
     public static int currentUserID;
@@ -71,6 +75,11 @@ public class dashboardController implements Initializable {
 
     public Button exit;
 
+    /**
+     * Overrides initialize method to populate the Tableviews of Appointments and Customers, respectively.
+     * Tableviews are populated by querying the database using the getAllCustomers and getAllAppointments methods.
+     * @throws SQLException to query database
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -108,6 +117,11 @@ public class dashboardController implements Initializable {
         }
     }
 
+    /**
+     * Sends the user to the Add Customer Screen
+     * @param actionEvent handles clicking the 'Add' button below the 'Customers' table
+     * @throws IOException opens addCustomerForm.fxml, with corresponding application window
+     */
     public void onCustomerAdd(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/addCustomerForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -117,6 +131,11 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Collects selected Customer data and Sends the user to the Update Customer Screen
+     * @param actionEvent handles clicking the 'Update' button below the 'Customers' table
+     * @throws IOException opens updateCustomerForm.fxml, with corresponding application window
+     */
     public void onCustomerUpdate(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -140,6 +159,11 @@ public class dashboardController implements Initializable {
         }
     }
 
+    /**
+     * Used to delete Customers from database. Will prompt the User to first delete any existing Appointments associated with the Customer.
+     * @param actionEvent handles clicking the 'Delete' button below the 'Customers' table.
+     * @throws SQLException calls delete method from CustomerQuery Abstract Class to remove Customer from the database
+     */
     public void onCustomerDelete(ActionEvent actionEvent) {
         try {
             Customer customer = customerTable.getSelectionModel().getSelectedItem();
@@ -167,6 +191,11 @@ public class dashboardController implements Initializable {
         }
     }
 
+    /**
+     * Sends the user to the Add Appointment Screen
+     * @param actionEvent handles clicking the 'Add' button below the 'Appointments' table
+     * @throws IOException opens addAppointmentForm.fxml, with corresponding application window
+     */
     public void onAppointmentAdd(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/addAppointmentForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -176,6 +205,11 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Collects selected Appointment data and Sends the user to the Update Appointment Screen
+     * @param actionEvent handles clicking the 'Update' button below the 'Appointments' table
+     * @throws IOException opens updateAppointmentForm.fxml, with corresponding application window
+     */
     public void onAppointmentUpdate(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -199,6 +233,11 @@ public class dashboardController implements Initializable {
         }
     }
 
+    /**
+     * Used to delete Appointments from database. Will prompt user for confirmation.
+     * @param actionEvent handles clicking the 'Delete' button below the 'Appointments' table.
+     * @throws SQLException calls delete method from AppointmentQuery Abstract Class to remove Appointment from the database
+     */
     public void onAppointmentDelete(ActionEvent actionEvent) {
         try {
             Appointment appointment = appointmentTable.getSelectionModel().getSelectedItem();
@@ -227,6 +266,11 @@ public class dashboardController implements Initializable {
         }
     }
 
+    /**
+     * Sends the user to the Appointment Sort Screen
+     * @param actionEvent handles clicking the 'Sorted Appointments' button
+     * @throws IOException opens sortedAppointmentsForm.fxml, with corresponding application window
+     */
     public void onSortedAppointments(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/sortedAppointmentsForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -236,6 +280,11 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sends the user to the Appointments by Type Screen
+     * @param actionEvent handles clicking the 'Appointments By Type' button
+     * @throws IOException opens typeReportForm.fxml, with corresponding application window
+     */
     public void onAppointmentsByType(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/typeReportForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -245,6 +294,11 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sends the user to the Appointment Count By User Screen
+     * @param actionEvent handles clicking the 'Appointments By User' button
+     * @throws IOException opens userReportForm.fxml, with corresponding application window
+     */
     public void onAppointmentsByUser(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/userReportForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -254,15 +308,25 @@ public class dashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sends the user to the Contact Schedule Screen
+     * @param actionEvent handles clicking the 'Contact Schedules' button
+     * @throws IOException opens contactScheduleForm.fxml, with corresponding application window
+     */
     public void onContactSchedules(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/contactScheduleForm.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 440);
-        stage.setTitle("Contact Weekly Schedule");
+        stage.setTitle("Contact Schedule");
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Logs the user out of the Application
+     * @param actionEvent handles clicking the 'Exit' button
+     * @throws IOException returns the user to the Login Screen
+     */
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");

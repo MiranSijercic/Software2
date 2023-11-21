@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="466.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.updateCustomerController">
    <children>
       <VBox layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="100.0" spacing="34.0">
@@ -27,8 +26,8 @@
             <TextField fx:id="nameField" layoutX="10.0" layoutY="10.0" />
             <TextField fx:id="addressField" layoutX="10.0" layoutY="10.0" />
             <TextField fx:id="postalCodeField" layoutX="10.0" layoutY="35.0" />
-            <ComboBox fx:id="stateCombo" prefWidth="150.0" />
-            <ComboBox fx:id="countryCombo" layoutX="10.0" layoutY="110.0" prefWidth="150.0" />
+            <ComboBox fx:id="stateCombo" onAction="#onStateCombo" prefWidth="150.0" />
+            <ComboBox fx:id="countryCombo" layoutX="10.0" layoutY="110.0" onAction="#onCountryCombo" prefWidth="150.0" />
             <TextField fx:id="phoneField" layoutX="10.0" layoutY="60.0" />
          </children>
       </VBox>

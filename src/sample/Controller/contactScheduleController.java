@@ -20,6 +20,10 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Contact Schedule screen, called from the Dashboard Screen.
+ * Used to show all appointments assigned to a selected Contact.
+ */
 public class contactScheduleController implements Initializable {
     public TableView<Appointment> appointmentTable;
     public TableColumn<Appointment, Integer> appointmentIDCol;
@@ -34,6 +38,10 @@ public class contactScheduleController implements Initializable {
 
     public Button returnButton;
 
+    /**
+     * Overrides initialize method to initialize the Tableview of Appointments, and populate the contactCombo combo box with all Contacts.
+     * @throws SQLException to query database
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -52,10 +60,20 @@ public class contactScheduleController implements Initializable {
         }
     }
 
+    /**
+     * Calls contactScheduleSelect method to query database for all appointments assigned to the selected contact and sets them to the tableview.
+     * @param actionEvent handles selecting a Contact
+     * @throws SQLException to query database
+     */
     public void onContactCombo(ActionEvent actionEvent) throws SQLException {
         appointmentTable.setItems(UtilityMethods.contactScheduleSelect(contactCombo.getSelectionModel().getSelectedItem().getContactID()));
     }
 
+    /**
+     * Closes the Contact Schedule screen
+     * @param actionEvent handles clicking the 'Return' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onReturn(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

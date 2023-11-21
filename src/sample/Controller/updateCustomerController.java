@@ -1,5 +1,7 @@
 package sample.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +23,10 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Update Customer screen, called from the Dashboard Screen.
+ * Used by Users to update Customer contact information
+ */
 public class updateCustomerController implements Initializable {
 
     private Timestamp createDate;
@@ -38,6 +44,10 @@ public class updateCustomerController implements Initializable {
     public Button save;
     public Button exit;
 
+    /**
+     * Overrides initialize method to populate state and country combo boxes with corresponding data
+     * @throws SQLException to query database
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -52,6 +62,10 @@ public class updateCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Used to pass Customer data to, and populate the fields of, the Update Customer Form
+     * @param selectedCustomer is the Appointment selected from the Appointment Table in the Dashboard screen
+     */
     public void sendCustomer(Customer selectedCustomer) {
         customerIDField.setText(String.valueOf(selectedCustomer.getCustomerID()));
         nameField.setText(selectedCustomer.getCustomerName());
@@ -72,6 +86,41 @@ public class updateCustomerController implements Initializable {
         }
         this.createDate = selectedCustomer.getCreateDate();
         this.createdBy = selectedCustomer.getCreatedBy();
+    }
+
+    public void onCountryCombo(ActionEvent actionEvent) throws SQLException {
+        Country selectedCountry = countryCombo.getSelectionModel().getSelectedItem();
+        ObservableList<FLD> filteredFLD = FXCollections.observableArrayList();
+        int countryID = selectedCountry.getCountryID();
+        switch (countryID) {
+            case 1:
+                for (FLD fld: FLDQuery.getAllFLD()) {
+                    if (fld.getCountryID() == 1) {
+                        filteredFLD.add(fld);
+                    }
+
+                }
+                break;
+            case 2:
+                for (FLD fld: FLDQuery.getAllFLD()) {
+                    if (fld.getCountryID() == 2) {
+                        filteredFLD.add(fld);
+                    }
+                }
+                break;
+            case 3:
+                for (FLD fld: FLDQuery.getAllFLD()) {
+                    if (fld.getCountryID() == 3) {
+                        filteredFLD.add(fld);
+                    }
+                }
+                break;
+        }
+        stateCombo.setItems(filteredFLD);
+    }
+
+    public void onStateCombo(ActionEvent actionEvent) {
+        countryCombo.getSelectionModel().clearSelection();
     }
 
     public void onSave(ActionEvent actionEvent) {
@@ -131,4 +180,5 @@ public class updateCustomerController implements Initializable {
             alert.close();
         }
     }
+
 }

@@ -26,6 +26,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * This Class is the controller for the Add Customer screen, called from the Dashboard Screen.
+ * Used by Users to add Customers to the database.
+ */
 public class addCustomerController implements Initializable {
 
     public TextField nameField;
@@ -39,7 +43,9 @@ public class addCustomerController implements Initializable {
     public Button save;
     public Button exit;
 
-
+    /**
+     * Overrides initialize method to populate the State and Country combo boxes with corresponding data.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -54,9 +60,11 @@ public class addCustomerController implements Initializable {
         }
     }
 
-    public void onStateSelect(ActionEvent actionEvent) {
-    }
-
+    /**
+     * Filters available States/Territories in the stateCombo combo box to only those belonging to the selected Country.
+     * @param actionEvent handles selecting a country from the countryCombo combo box
+     * @throws SQLException to query database
+     */
     public void onCountrySelect(ActionEvent actionEvent) throws SQLException {
         Country selectedCountry = countryCombo.getSelectionModel().getSelectedItem();
         ObservableList<FLD> filteredFLD = FXCollections.observableArrayList();
@@ -88,6 +96,12 @@ public class addCustomerController implements Initializable {
         stateCombo.setItems(filteredFLD);
     }
 
+    /**
+     * Stores data from all fields and creates a new Customer object, checks that no field is empty and catches Exceptions
+     * @param actionEvent handles clicking the 'Save' button
+     * @throws IOException returns the User to the Dashboard screen
+     * @throws SQLException to query database
+     */
     public void onSave(ActionEvent actionEvent) {
         try {
             if (!(nameField.getText().isEmpty() || addressField.getText().isEmpty() || postalCodeField.getText().isEmpty()
@@ -127,6 +141,11 @@ public class addCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Closes the Add Customer screen
+     * @param actionEvent handles clicking the 'Exit' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

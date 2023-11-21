@@ -33,7 +33,5 @@ public class Main extends Application {
 // First lambda is in onMonthCombo in sortedAppointmentsController
 // Second lambda is in loginController onExit method
 
-//todo: Finish 15 minute alert
-//todo: Confirm that weekly sorts from sortedAppointments are calendar vs static +7 days from login?
-//todo: find another lambda opportunity
+//todo: add state/city filtering to updateCustomer
 

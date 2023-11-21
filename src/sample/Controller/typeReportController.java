@@ -18,6 +18,10 @@ import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Appointments By Type screen, called from the Dashboard Screen.
+ * Used to find the total count of Appointments by selected type.
+ */
 public class typeReportController implements Initializable {
     public ComboBox<Month> monthCombo;
     public ComboBox<String> typeCombo;
@@ -26,6 +30,10 @@ public class typeReportController implements Initializable {
 
     public Button returnButton;
 
+    /**
+     * Overrides initialize method to populate month and type combo boxes, respectively.
+     * @throws SQLException to query database
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -41,6 +49,12 @@ public class typeReportController implements Initializable {
         }
     }
 
+    /**
+     * Checks that type combo has a selection, the uses monthAndTypeSelect method from UtilityMethods Abstract class to get the count of Appointments.
+     * Passes the type and month selections to monthAndTypeSelect method
+     * @param actionEvent handles selecting a month
+     * @throws SQLException to query database
+     */
     public void onMonthCombo(ActionEvent actionEvent) throws SQLException {
         if (!typeCombo.getSelectionModel().isEmpty()) {
             countField.setText(String.valueOf(UtilityMethods.monthAndTypeSelect(typeCombo.getSelectionModel().getSelectedItem(),
@@ -48,12 +62,24 @@ public class typeReportController implements Initializable {
         }
     }
 
+    /**
+     * Checks that month combo has a selection, the uses monthAndTypeSelect method from UtilityMethods Abstract class to get the count of Appointments.
+     * Passes the type and month selections to monthAndTypeSelect method
+     * @param actionEvent handles selecting a type
+     * @throws SQLException to query database
+     */
     public void onTypeCombo(ActionEvent actionEvent) throws SQLException {
         if (!monthCombo.getSelectionModel().isEmpty()) {
             countField.setText(String.valueOf(UtilityMethods.monthAndTypeSelect(typeCombo.getSelectionModel().getSelectedItem(),
                     monthCombo.getSelectionModel().getSelectedIndex() + 1)));
         }
     }
+
+    /**
+     * Closes the Appointments by Type screen
+     * @param actionEvent handles clicking the 'Return' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onReturn(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

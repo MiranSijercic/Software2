@@ -24,6 +24,10 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Update Appointment screen, called from the Dashboard Screen.
+ * Used by Users to change or reschedule Appointments.
+ */
 public class updateAppointmentController implements Initializable {
 
     public TextField appointmentIDField;
@@ -42,6 +46,11 @@ public class updateAppointmentController implements Initializable {
     public Button save;
     public Button exit;
 
+    /**
+     * Overrides initialize method to populate customer, contact, start, and end combo boxes with corresponding data.
+     * Uses convertedTimes method from UtilityMethods Abstract Class to convert star and end times to be within business hours
+     * @throws SQLException to query database
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -55,6 +64,10 @@ public class updateAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Used to pass Appointment data to, and populate the fields of, the Update Appointment Form
+     * @param appointment is the Appointment selected from the Appointment Table in the Dashboard screen
+     */
     public void sendAppointment(Appointment appointment) {
         for (Customer customer: customerCombo.getItems()) {
             if (customer.getCustomerID() == appointment.getCustomerID()) {
@@ -76,6 +89,11 @@ public class updateAppointmentController implements Initializable {
         endCombo.setValue(appointment.getEnd().toLocalDateTime().toLocalTime());
     }
 
+    /**
+     * Stores data from all fields and creates and updates the existing Appointment object, checks for Appointment time overlap/clashes and catches Exceptions
+     * @param actionEvent handles clicking the 'Save' button
+     * @throws SQLException to query database
+     */
     public void onSave(ActionEvent actionEvent) throws SQLException {
         try {
             if (!(customerCombo.getSelectionModel().isEmpty() || titleField.getText().isEmpty() || descriptionField.getText().isEmpty()
@@ -166,6 +184,11 @@ public class updateAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Closes the Update Appointment screen
+     * @param actionEvent handles clicking the 'Exit' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

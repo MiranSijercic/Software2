@@ -22,6 +22,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Sorted Appointments screen.
+ * Used to allow filtering of all Appointments by current month or current week.
+ */
 public class sortedAppointmentsController implements Initializable {
     public TableView<Appointment> appointmentTable;
     public TableColumn<Appointment, Integer> appointmentIDCol;
@@ -47,6 +51,9 @@ public class sortedAppointmentsController implements Initializable {
 
     public Button returnButton;
 
+    /**
+     * Overrides initialize method to populate the Tableview with all Appointments.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -72,6 +79,12 @@ public class sortedAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Uses a lambda expression to sort all Appointments by current month and resets the Appointment table with the sorted observable list.
+     * Lambda justification: used to avoid need to write an additional method for a sql query to sort appointment by current month
+     * @param actionEvent handles selecting the 'Month' radio button
+     * @throws SQLException to query database
+     */
     public void onMonthRadio(ActionEvent actionEvent) throws IOException, SQLException {
         appointmentTable.setItems(AppointmentQuery.getAllAppointments());
         ObservableList<Appointment> sortedAppointments = FXCollections.observableArrayList(
@@ -80,15 +93,31 @@ public class sortedAppointmentsController implements Initializable {
         appointmentTable.setItems(sortedAppointments);
     }
 
+    /**
+     * Uses appointmentByCurrentWeekSelect method from UtilityMethods Abstract class to sort Appointments by the current week.
+     * Resets Appointment table with sorted observable list.
+     * @param actionEvent handles selecting the 'Week' radio button
+     * @throws SQLException to query database
+     */
     public void onWeekRadio(ActionEvent actionEvent) throws SQLException {
         appointmentTable.setItems(AppointmentQuery.getAllAppointments());
         appointmentTable.setItems(UtilityMethods.appointmentByCurrentWeekSelect());
     }
 
+    /**
+     * Resets the Appointment tableview to show all Appointments. Uses getAllAppointments method from AppointmentQuery Abstract class
+     * @param actionEvent handles selecting the 'Show All' radio button
+     * @throws SQLException to query database
+     */
     public void onShowAllRadio(ActionEvent actionEvent) throws SQLException {
         appointmentTable.setItems(AppointmentQuery.getAllAppointments());
     }
 
+    /**
+     * Closes the Sorted Appointments screen
+     * @param actionEvent handles clicking the 'Return' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onReturnButton(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

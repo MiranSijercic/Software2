@@ -24,6 +24,10 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Add Appointment screen, called from the Dashboard Screen.
+ * Used by Users to schedule Appointments.
+ */
 public class addAppointmentController implements Initializable {
     public TextField titleField;
     public TextField descriptionField;
@@ -40,6 +44,9 @@ public class addAppointmentController implements Initializable {
     public Button save;
     public Button exit;
 
+    /**
+     * Overrides initialize method to populate the Customer, Contact, Start, and End combo boxes with corresponding data.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -53,6 +60,11 @@ public class addAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Stores data from all fields and creates a new Appointment object, checks for Appointment time overlap/clashes and catches Exceptions
+     * @param actionEvent handles clicking the 'Save' button
+     * @throws SQLException to query database
+     */
     public void onSave(ActionEvent actionEvent) throws SQLException {
         try {
             if (!(customerCombo.getSelectionModel().isEmpty() || titleField.getText().isEmpty() || descriptionField.getText().isEmpty()
@@ -143,6 +155,11 @@ public class addAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Closes the Add Appointment screen
+     * @param actionEvent handles clicking the 'Exit' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

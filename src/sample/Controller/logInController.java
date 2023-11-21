@@ -24,6 +24,10 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+/**
+ * This Class is the controller for the Login screen.
+ * User is directed to this screen on Application launch.
+ */
 public class logInController implements Initializable {
 
     public Label zoneLabel;
@@ -44,6 +48,10 @@ public class logInController implements Initializable {
     public String exitHeader;
     public String exitMessage;
 
+    /**
+     * Overrides initialize method checks System timezone and language, then populates languageLabel and zoneLabel with corresponding information.
+     * Translates the page and alerts according to the System language.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -77,6 +85,11 @@ public class logInController implements Initializable {
         }
     }
 
+    /**
+     * Verifies User's username and password. Logs login attempt. If user is verified, checks if there is an appointment within the next 15 minutes and provides Alert.
+     * @param actionEvent handles clicking the 'Login' button
+     * @throws IOException opens dashboard.fxml, with corresponding application window
+     */
     public void onLogin(ActionEvent actionEvent) throws IOException {
         try {
             String userName = userNameField.getText();
@@ -139,6 +152,12 @@ public class logInController implements Initializable {
         }
     }
 
+    /**
+     * Closes the application. Handles the Confirmation Alert with a lambda expression.
+     * Lambda justification: used to bypass additional if/else statement tied to user clicking 'Ok' button on confirmation Alert.
+     * @param actionEvent handles clicking the 'Exit' button
+     * @throws IOException Closes the application
+     */
     public void onExit(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(exit);
