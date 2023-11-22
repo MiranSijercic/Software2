@@ -9,8 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * This Abstract Class is used to store CRUD methods for the FLD table in the database.
+ */
 public abstract class FLDQuery {
 
+    /**
+     * This method runs a SQL select statement to get all FLD from the database
+     * @return an Observable list of States/Territories
+     */
     public static ObservableList<FLD> getAllFLD() throws SQLException {
         ObservableList<FLD> allFLD = FXCollections.observableArrayList();
         String sql = "SELECT * FROM first_level_divisions";

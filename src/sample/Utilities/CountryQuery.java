@@ -5,8 +5,15 @@ import javafx.collections.ObservableList;
 import sample.Model.Country;
 import java.sql.*;
 
+/**
+ * This Abstract Class is used to store CRUD methods for the Country table in the database.
+ */
 public abstract class CountryQuery {
 
+    /**
+     * This method runs a SQL select statement to get all Countries from the database
+     * @return an Observable list of Countries
+     */
     public static ObservableList<Country> getAllCountries() throws SQLException {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
         String sql = "SELECT * FROM countries";

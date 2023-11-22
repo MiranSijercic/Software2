@@ -18,6 +18,10 @@ import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This Class is the controller for the Appointments by User screen, called from the Dashboard Screen.
+ * This was my additional report of choice. This is used as a metric to measure the number of appointments Users are scheduling each month.
+ */
 public class userReportController implements Initializable {
     public ComboBox<User> userCombo;
     public ComboBox<Month> monthCombo;
@@ -26,6 +30,10 @@ public class userReportController implements Initializable {
 
     public Button returnButton;
 
+    /**
+     * Overrides initialize method to populate the user and month combo boxes with corresponding data
+     * @throws SQLException to query database
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -37,6 +45,12 @@ public class userReportController implements Initializable {
         }
     }
 
+    /**
+     * Checks that month combo has a selection, then uses userAndMonthSelect method from UtilityMethods Abstract class to get the count of Appointments.
+     * Passes the user and month selections to userAndMonthSelect method
+     * @param actionEvent handles selecting a User
+     * @throws SQLException to query database
+     */
     public void onUserCombo(ActionEvent actionEvent) throws SQLException {
         if (!monthCombo.getSelectionModel().isEmpty()) {
             countField.setText(String.valueOf(UtilityMethods.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
@@ -44,6 +58,12 @@ public class userReportController implements Initializable {
         }
     }
 
+    /**
+     * Checks that user combo has a selection, then uses userAndMonthSelect method from UtilityMethods Abstract class to get the count of Appointments.
+     * Passes the user and month selections to userAndMonthSelect method
+     * @param actionEvent handles selecting a Month
+     * @throws SQLException to query database
+     */
     public void onMonthCombo(ActionEvent actionEvent) throws SQLException {
         if (!userCombo.getSelectionModel().isEmpty()) {
             countField.setText(String.valueOf(UtilityMethods.userAndMonthSelect(userCombo.getSelectionModel().getSelectedItem().getUserID(),
@@ -51,6 +71,11 @@ public class userReportController implements Initializable {
         }
     }
 
+    /**
+     * Closes the Appointments by User screen
+     * @param actionEvent handles clicking the 'Return' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onReturn(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

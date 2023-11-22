@@ -10,8 +10,14 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * This Abstract Class is used to store CRUD methods for the Appointment table in the database.
+ */
 public abstract class AppointmentQuery {
 
+    /**
+     * This method runs a SQL insert statement when provided Appointment Class field parameters to add a new Appointment to the database
+     */
     public static int insert(String title, String description, String location, String type,
                              Timestamp start, Timestamp end, Timestamp createDate, String createdBy, Timestamp lastUpdate,
                              String lastUpdatedBy, int customerID, int userID, int contactID) throws SQLException {
@@ -36,6 +42,9 @@ public abstract class AppointmentQuery {
         return rowsAffected;
     }
 
+    /**
+     * This method runs a SQL update statement when provided Appointment Class field parameters to update an existing Appointment in the database
+     */
     public static int update(int appointmentID, String title, String description, String location, String type,
                              Timestamp start, Timestamp end, Timestamp createDate, String createdBy, Timestamp lastUpdate,
                              String lastUpdatedBy, int customerID, int userID, int contactID) throws SQLException {
@@ -62,6 +71,9 @@ public abstract class AppointmentQuery {
         return rowsAffected;
     }
 
+    /**
+     * This method runs a SQL delete statement to remove an Appointment with the provided appointmentID parameter from the database
+     */
     public static int delete(int appointmentID) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -71,6 +83,10 @@ public abstract class AppointmentQuery {
         return rowsAffected;
     }
 
+    /**
+     * This method runs a SQL select statement to get all Appointments from the database
+     * @return an Observable list of Appointments
+     */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments";

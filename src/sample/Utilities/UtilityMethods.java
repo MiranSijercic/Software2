@@ -16,8 +16,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
 
+/**
+ * This is an Abstract class containing utility methods used for generating reports, converting timezones, and sql statements for filtering lists
+ */
 public abstract class UtilityMethods {
 
+    /**
+     * This method is used to convert Business hours from US Eastern Time to the System Local Time.
+     * @return An Observable list of LocalTime that will be used to populate combo boxes in the Appointment scheduling areas of the application
+     */
     public static ObservableList<LocalTime> convertedTimes() {
         ZonedDateTime openingTimeEastern = ZonedDateTime.of(LocalDate.now(), LocalTime.of(8,0), ZoneId.of("America/New_York"));
 
@@ -32,6 +39,13 @@ public abstract class UtilityMethods {
         return startTimes;
     }
 
+    /**
+     * This method is used to query the database to generate the report for Appointments by Month and Type
+     * @param type is the Appointment type that the user will select in the gui in the Appointment By Type Screen
+     * @param month is the Month that the user will select in the gui in the Appointment by Type Screen
+     * @return the count of Appointments
+     * @throws SQLException to query database
+     */
     public static int monthAndTypeSelect (String type, int month) throws SQLException {
         String sql = "SELECT COUNT(*) as row_count FROM appointments WHERE Type = ? AND MONTH(Start) = ? AND YEAR(Start) = YEAR(now())";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -46,9 +60,14 @@ public abstract class UtilityMethods {
         return 0;
     }
 
+    /**
+     * This method runs a sql query used to sort all Appointments by the current week. This is called in sortedAppointmentController
+     * @return An Observable list of Appointments that will be used to populate the Tableview in the Sorted Appointments Screen
+     * @throws SQLException to query the database
+     */
     public static ObservableList<Appointment> appointmentByCurrentWeekSelect () throws SQLException {
         ObservableList<Appointment> appointmentsByCurrentWeek = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM appointments WHERE YEAR(Start) = YEAR(CURDATE()) AND WEEK(Start) = WEEK(CURDATE())";
+        String sql = "SELECT * FROM appointments WHERE Start BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -75,6 +94,13 @@ public abstract class UtilityMethods {
         return appointmentsByCurrentWeek;
     }
 
+    /**
+     * This method is used to query the database to generate the report for the count of Appointments created by selected User by selected month
+     * @param userID is the User ID that the Application user will select in the gui in the User Report Screen
+     * @param month is the Month that the user will select in the gui in the User Report Screen
+     * @return the count of Appointments
+     * @throws SQLException to query database
+     */
     public static int userAndMonthSelect (int userID, int month) throws SQLException {
         String sql = "SELECT COUNT(*) as row_count FROM appointments WHERE User_ID = ? AND MONTH(Start) = ? AND YEAR(Start) = YEAR(now())";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -89,6 +115,12 @@ public abstract class UtilityMethods {
         return 0;
     }
 
+    /**
+     * This method runs a sql query used to filter all Appointments by a selected Contact. This is called in contactScheduleController
+     * @param contactID is the Contact ID that the user will select in the gui in the Contact Schedule screen
+     * @return An Observable list of Appointments that will be used to populate the Tableview in contactScheduleController
+     * @throws SQLException to query the database
+     */
     public static ObservableList<Appointment> contactScheduleSelect (int contactID) throws SQLException {
         ObservableList<Appointment> contactWeekSchedule = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Contact_ID = ? AND Start >= NOW()";
@@ -118,6 +150,11 @@ public abstract class UtilityMethods {
         return contactWeekSchedule;
     }
 
+    /**
+     * This method logs login attempts to the login_activity.txt file
+     * @param message will write to a new line each time a login is attempted. Will log attempt time, and if successful, the User ID of the account logging in
+     * @throws IOException to write to the file
+     */
     public static void logToFile(String message) throws IOException {
         File logFile = new File("login_activity.txt");
         FileWriter fileWriter = new FileWriter(logFile, true);

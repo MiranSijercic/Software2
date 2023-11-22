@@ -9,8 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * This Abstract Class is used to store CRUD methods for the Customer table in the database.
+ */
 public abstract class CustomerQuery {
 
+    /**
+     * This method runs a SQL insert statement when provided Customer Class field parameters to add a new Customer to the database
+     */
     public static int insert(String customerName, String address, String postalCode, String phone,
                              Timestamp createDate, String createdBy, Timestamp lastUpdate,
                              String lastUpdatedBy, int divisionID) throws SQLException {
@@ -31,6 +37,9 @@ public abstract class CustomerQuery {
         return rowsAffected;
     }
 
+    /**
+     * This method runs a SQL update statement when provided Customer Class field parameters to update an existing Customer in the database
+     */
     public static int update(int customerID, String customerName, String address, String postalCode, String phone,
                              Timestamp createDate, String createdBy, Timestamp lastUpdate,
                              String lastUpdatedBy, int divisionID) throws SQLException {
@@ -52,6 +61,9 @@ public abstract class CustomerQuery {
         return rowsAffected;
     }
 
+    /**
+     * This method runs a SQL delete statement to remove a Customer with the provided customerID parameter from the database
+     */
     public static int delete(int customerID) throws SQLException {
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -61,7 +73,10 @@ public abstract class CustomerQuery {
         return rowsAffected;
     }
 
-
+    /**
+     * This method runs a SQL select statement to get all Customers from the database
+     * @return an Observable list of Customers
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM customers";

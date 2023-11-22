@@ -50,7 +50,7 @@ public class typeReportController implements Initializable {
     }
 
     /**
-     * Checks that type combo has a selection, the uses monthAndTypeSelect method from UtilityMethods Abstract class to get the count of Appointments.
+     * Checks that type combo has a selection, then uses monthAndTypeSelect method from UtilityMethods Abstract class to get the count of Appointments.
      * Passes the type and month selections to monthAndTypeSelect method
      * @param actionEvent handles selecting a month
      * @throws SQLException to query database

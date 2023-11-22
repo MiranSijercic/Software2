@@ -88,6 +88,11 @@ public class updateCustomerController implements Initializable {
         this.createdBy = selectedCustomer.getCreatedBy();
     }
 
+    /**
+     * Filters available States/Territories in the stateCombo combo box to only those belonging to the selected Country.
+     * @param actionEvent handles selecting a country from the countryCombo combo box
+     * @throws SQLException to query database
+     */
     public void onCountryCombo(ActionEvent actionEvent) throws SQLException {
         Country selectedCountry = countryCombo.getSelectionModel().getSelectedItem();
         ObservableList<FLD> filteredFLD = FXCollections.observableArrayList();
@@ -119,10 +124,13 @@ public class updateCustomerController implements Initializable {
         stateCombo.setItems(filteredFLD);
     }
 
-    public void onStateCombo(ActionEvent actionEvent) {
-        countryCombo.getSelectionModel().clearSelection();
-    }
-
+    /**
+     * Stores data from all fields and calls update method from CustomerQuery Abstract Class to update the Customer object in database
+     * checks that no field is empty and catches Exceptions
+     * @param actionEvent handles clicking the 'Save' button
+     * @throws IOException returns the User to the Dashboard screen
+     * @throws SQLException to query database
+     */
     public void onSave(ActionEvent actionEvent) {
         try {
             if (!(customerIDField.getText().isEmpty() || nameField.getText().isEmpty() || addressField.getText().isEmpty()
@@ -162,6 +170,11 @@ public class updateCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Closes the Update Customer screen
+     * @param actionEvent handles clicking the 'Exit' button
+     * @throws IOException returns the user to the Dashboard screen
+     */
     public void onExit(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return");

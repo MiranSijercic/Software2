@@ -9,8 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This Abstract Class is used to store CRUD methods for the Contact table in the database.
+ */
 public abstract class ContactQuery {
 
+    /**
+     * This method runs a SQL select statement to get all Contacts from the database
+     * @return an Observable list of Contacts
+     */
     public static ObservableList<Contact> getAllContacts() throws SQLException {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM contacts";
